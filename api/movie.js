@@ -11,14 +11,14 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
         originalReleaseYear
         posterUrl
         shortDescription
-        genres { translation }
+        genres { translation(language: $lang) }
         scoring {
           imdbScore
           imdbVotes
         }
         credits {
           role {
-            ... on Cast { name character }
+            ... on CastMember { name character }
             ... on Director { name }
           }
           crType
@@ -131,7 +131,7 @@ module.exports = async (req, res) => {
       title:     content.title,
       year:      content.originalReleaseYear,
       overview:  content.shortDescription || '',
-      genres:    (content.genres || []).map(g => g.translation),
+      genres:    (content.genres || []).map(g => g.translation || '').filter(Boolean),
       poster:    content.posterUrl || null,
       imdbScore: content.scoring?.imdbScore || null,
       imdbVotes: content.scoring?.imdbVotes || null,
