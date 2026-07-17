@@ -16,7 +16,7 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
         ageCertification
         genres { translation }
         posterUrl
-        backdrops(profile: S1440, format: JPG) { backdropUrl }
+        backdrops { backdropUrl }
         scoring {
           imdbScore
           imdbVotes
@@ -30,7 +30,7 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
           crType
         }
       }
-      offers(country: $country, platform: WEB) {
+      offers(country: $country) {
         monetizationType
         retailPrice(language: $lang)
         package { clearName shortName }
@@ -40,18 +40,11 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
   }
 }`;
 
-// Search for related movies in the same series
 const SERIES_QUERY = `
 query Series($id: ID!, $country: Country!, $lang: Language!) {
   node(id: $id) {
     ... on Movie {
-      content(country: $country, language: $lang) {
-        title
-      }
-      similarTitlesV2(
-        country: $country
-        allowSponsoredRecommendations: { sponsoredLevel: NON_SPONSORED }
-      ) {
+      similarTitlesV2(country: $country) {
         edges {
           node {
             id
@@ -107,7 +100,6 @@ module.exports = async (req, res) => {
 
     const content = node.content || {};
 
-    // Parse cast & directors from credits
     const directors = [], cast = [];
     for (const c of content.credits || []) {
       if (c.crType === 'DIRECTOR' || c.role?.__typename === 'Director') {
@@ -117,15 +109,12 @@ module.exports = async (req, res) => {
       }
     }
 
-    // Streaming offers
     const { providers, grouped } = groupOffers(node.offers || []);
 
-    // Series: try to find related movies — best-effort, don't fail if unavailable
     let series = null;
     try {
       const sData = await gql(SERIES_QUERY, { id, country, lang: language });
       const edges = sData?.node?.similarTitlesV2?.edges || [];
-      // Filter: only include if titles share the base word (rough franchise detection)
       const baseWord = content.title?.split(/[\s:–—]/)[0]?.toLowerCase() || '';
       const related = edges
         .map(e => ({
@@ -137,39 +126,30 @@ module.exports = async (req, res) => {
         .filter(m => baseWord && m.title.toLowerCase().includes(baseWord));
       if (related.length > 0) {
         series = [
-          {
-            id:     node.id,
-            title:  content.title,
-            year:   content.originalReleaseYear,
-            poster: content.posterUrl,
-          },
+          { id: node.id, title: content.title, year: content.originalReleaseYear, poster: content.posterUrl },
           ...related,
         ].sort((a, b) => (a.year || 9999) - (b.year || 9999));
       }
     } catch (_) {}
 
     return res.json({
-      id:          node.id,
-      title:       content.title,
+      id:           node.id,
+      title:        content.title,
       originalTitle: content.originalTitle || null,
-      year:        content.originalReleaseYear,
-      releaseDate: content.originalReleaseDate || null,
-      runtime:     content.runtime || null,
-      overview:    content.shortDescription || '',
-      cert:        content.ageCertification || null,
-      genres:      (content.genres || []).map(g => g.translation),
-      poster:      content.posterUrl || null,
-      backdrop:    content.backdrops?.[0]?.backdropUrl || null,
-      imdbScore:   content.scoring?.imdbScore || null,
-      imdbVotes:   content.scoring?.imdbVotes || null,
-      tomatoMeter: content.scoring?.tomatoMeter || null,
+      year:         content.originalReleaseYear,
+      releaseDate:  content.originalReleaseDate || null,
+      runtime:      content.runtime || null,
+      overview:     content.shortDescription || '',
+      cert:         content.ageCertification || null,
+      genres:       (content.genres || []).map(g => g.translation),
+      poster:       content.posterUrl || null,
+      backdrop:     content.backdrops?.[0]?.backdropUrl || null,
+      imdbScore:    content.scoring?.imdbScore || null,
+      imdbVotes:    content.scoring?.imdbVotes || null,
+      tomatoMeter:  content.scoring?.tomatoMeter || null,
       directors,
-      cast:        cast.slice(0, 5),
-      streaming: {
-        found:     providers.length > 0,
-        providers,
-        grouped,
-      },
+      cast:         cast.slice(0, 5),
+      streaming:    { found: providers.length > 0, providers, grouped },
       series,
     });
   } catch (err) {
