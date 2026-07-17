@@ -31,262 +31,167 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0C0C0E; --surface: #141417; --surface-2: #1C1C21; --surface-3: #242429;
-  --accent: #F5C842; --accent-dim: rgba(245,200,66,0.12); --accent-glow: rgba(245,200,66,0.25);
-  --text: #F2F0EB; --text-2: #A8A8B0; --text-3: #5C5C66;
-  --border: rgba(255,255,255,0.07); --border-2: rgba(255,255,255,0.12);
+  --bg:#0C0C0E;--surface:#141417;--surface-2:#1C1C21;--surface-3:#242429;
+  --accent:#F5C842;--accent-dim:rgba(245,200,66,0.12);--accent-glow:rgba(245,200,66,0.25);
+  --text:#F2F0EB;--text-2:#A8A8B0;--text-3:#5C5C66;
+  --border:rgba(255,255,255,0.07);--border-2:rgba(255,255,255,0.12);
 }
 :root[data-theme="light"] {
-  --bg: #F8F7F4; --surface: #FFFFFF; --surface-2: #F1F0EC; --surface-3: #E8E7E2;
-  --accent: #C8960A; --accent-dim: rgba(200,150,10,0.10); --accent-glow: rgba(200,150,10,0.20);
-  --text: #1A1A1E; --text-2: #5C5C66; --text-3: #A0A0A8;
-  --border: rgba(0,0,0,0.07); --border-2: rgba(0,0,0,0.12);
+  --bg:#F8F7F4;--surface:#FFFFFF;--surface-2:#F1F0EC;--surface-3:#E8E7E2;
+  --accent:#C8960A;--accent-dim:rgba(200,150,10,0.10);--accent-glow:rgba(200,150,10,0.20);
+  --text:#1A1A1E;--text-2:#5C5C66;--text-3:#A0A0A8;
+  --border:rgba(0,0,0,0.07);--border-2:rgba(0,0,0,0.12);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg); color: var(--text);
-  min-height: 100dvh; line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-button { cursor: pointer; font: inherit; border: none; background: none; }
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{cursor:pointer;font:inherit;border:none;background:none}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
-.shell { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+.shell{max-width:940px;margin:0 auto;padding:0 20px}
 
-/* Header */
-header {
-  padding: 28px 0 0;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em; }
-.logo em { color: var(--accent); font-style: normal; }
-.hdr-btn {
-  background: var(--surface-2); border: 1px solid var(--border-2);
-  color: var(--text-2); border-radius: 8px; padding: 6px 13px;
-  font-size: 0.8rem; font-weight: 500;
-  transition: background 0.15s, color 0.15s;
-}
-.hdr-btn:hover { background: var(--surface-3); color: var(--text); }
+header{padding:28px 0 0;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.2rem;font-weight:800;letter-spacing:-0.01em}
+.logo em{color:var(--accent);font-style:normal}
+.hdr-btn{background:var(--surface-2);border:1px solid var(--border-2);color:var(--text-2);border-radius:8px;padding:6px 13px;font-size:0.8rem;font-weight:500;transition:background .15s,color .15s}
+.hdr-btn:hover{background:var(--surface-3);color:var(--text)}
 
-/* Hero */
-.hero { padding: 52px 0 40px; text-align: center; }
-.hero-eyebrow {
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--text-3); margin-bottom: 14px;
-}
-.hero h1 {
-  font-size: clamp(1.8rem, 4vw, 2.55rem); font-weight: 700;
-  line-height: 1.15; letter-spacing: -0.02em;
-  text-wrap: balance; margin-bottom: 10px;
-}
-.hero-sub { color: var(--text-2); font-size: 1rem; margin-bottom: 36px; text-wrap: balance; }
+.hero{padding:52px 0 40px;text-align:center}
+.hero-eyebrow{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4vw,2.55rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;text-wrap:balance;margin-bottom:10px}
+.hero-sub{color:var(--text-2);font-size:1rem;margin-bottom:36px;text-wrap:balance}
 
-.search-bar {
-  display: flex; max-width: 580px; margin: 0 auto;
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.28);
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-.search-bar:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 4px 32px rgba(0,0,0,0.28), 0 0 0 3px var(--accent-glow);
-}
-#search-input {
-  flex: 1; background: transparent; border: none; outline: none;
-  color: var(--text); font-size: 1.05rem; padding: 15px 18px; font-family: inherit;
-}
-#search-input::placeholder { color: var(--text-3); }
-#search-btn {
-  background: var(--accent); color: #0C0C0E;
-  font-size: 0.88rem; font-weight: 700;
-  padding: 0 26px; letter-spacing: 0.04em; text-transform: uppercase;
-  flex-shrink: 0; transition: opacity 0.15s;
-}
-#search-btn:hover { opacity: 0.88; }
-#search-btn:disabled { opacity: 0.5; pointer-events: none; }
+.search-bar{display:flex;max-width:580px;margin:0 auto;background:var(--surface);border:1px solid var(--border-2);border-radius:14px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.28);transition:box-shadow .2s,border-color .2s}
+.search-bar:focus-within{border-color:var(--accent);box-shadow:0 4px 32px rgba(0,0,0,.28),0 0 0 3px var(--accent-glow)}
+#search-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:1.05rem;padding:15px 18px;font-family:inherit}
+#search-input::placeholder{color:var(--text-3)}
+#search-btn{background:var(--accent);color:#0C0C0E;font-size:.88rem;font-weight:700;padding:0 26px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0;transition:opacity .15s;min-width:96px}
+#search-btn:hover{opacity:.88}
+#search-btn:disabled{opacity:.5;pointer-events:none}
 
-.region-row {
-  margin-top: 14px; display: flex; align-items: center;
-  justify-content: center; gap: 8px; color: var(--text-3); font-size: 0.82rem;
-}
-#region-select {
-  background: var(--surface-2); border: 1px solid var(--border-2);
-  color: var(--text-2); border-radius: 6px; padding: 4px 8px;
-  font-size: 0.82rem; font-family: inherit; cursor: pointer;
-}
+.region-row{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text-3);font-size:.82rem}
+#region-select{background:var(--surface-2);border:1px solid var(--border-2);color:var(--text-2);border-radius:6px;padding:4px 8px;font-size:.82rem;font-family:inherit;cursor:pointer}
 
-/* Suggestions */
-.suggestions-wrap { max-width: 580px; margin: 8px auto 0; }
-.suggestions {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: 12px; overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: none;
-}
-.suggestions.open { display: block; }
-.suggestion-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; cursor: pointer;
-  border-bottom: 1px solid var(--border); transition: background 0.1s;
-}
-.suggestion-item:last-child { border-bottom: none; }
-.suggestion-item:hover { background: var(--surface-2); }
-.sugg-poster { width: 36px; height: 54px; object-fit: cover; border-radius: 4px; background: var(--surface-3); flex-shrink: 0; }
-.sugg-ph { width: 36px; height: 54px; background: var(--surface-3); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 0.7rem; }
-.sugg-title { font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sugg-year  { color: var(--text-2); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.suggestions-wrap{max-width:580px;margin:8px auto 0}
+.suggestions{background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);display:none}
+.suggestions.open{display:block}
+.suggestion-item{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .1s}
+.suggestion-item:last-child{border-bottom:none}
+.suggestion-item:hover{background:var(--surface-2)}
+.sugg-poster{width:36px;height:54px;object-fit:cover;border-radius:4px;background:var(--surface-3);flex-shrink:0}
+.sugg-ph{width:36px;height:54px;background:var(--surface-3);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:.7rem}
+.sugg-title{font-weight:600;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sugg-year{color:var(--text-2);font-size:.82rem;font-variant-numeric:tabular-nums}
 
-/* Results */
-#results { padding-bottom: 60px; }
+#results{padding-bottom:60px}
 
-.loading-state { text-align: center; padding: 60px 0; color: var(--text-2); }
-.spinner {
-  width: 36px; height: 36px; border: 3px solid var(--border-2);
-  border-top-color: var(--accent); border-radius: 50%;
-  animation: spin 0.75s linear infinite; margin: 0 auto 16px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+.loading-state{text-align:center;padding:60px 0;color:var(--text-2)}
+.spinner{width:36px;height:36px;border:3px solid var(--border-2);border-top-color:var(--accent);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
-.error-state {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg); padding: 32px; text-align: center; color: var(--text-2);
-}
-.error-state strong { color: var(--red); display: block; margin-bottom: 8px; }
+.error-state{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:32px;text-align:center;color:var(--text-2)}
+.error-state strong{color:var(--red);display:block;margin-bottom:8px}
 
-/* Movie card */
-.movie-card {
-  background: var(--surface); border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px;
-  animation: fadeUp 0.28s ease both;
-}
-@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-@media (prefers-reduced-motion: reduce) { .movie-card { animation: none; } }
+.movie-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:24px;animation:fadeUp .28s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.movie-card{animation:none}}
 
-.movie-main { display: grid; grid-template-columns: 180px 1fr; }
-@media (max-width: 600px) { .movie-main { grid-template-columns: 110px 1fr; } }
+.movie-main{display:grid;grid-template-columns:180px 1fr}
+@media(max-width:600px){.movie-main{grid-template-columns:110px 1fr}}
 
-.movie-poster-wrap { background: var(--surface-3); }
-.movie-poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
-.no-poster {
-  width: 100%; aspect-ratio: 2/3;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; background: var(--surface-3); color: var(--text-3); font-size: 0.75rem;
-}
-.no-poster svg { opacity: 0.25; }
+.movie-poster-wrap{background:var(--surface-3)}
+.movie-poster{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+.no-poster{width:100%;aspect-ratio:2/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--surface-3);color:var(--text-3);font-size:.75rem}
+.no-poster svg{opacity:.25}
 
-.movie-info { padding: 24px 26px; display: flex; flex-direction: column; }
-@media (max-width: 600px) { .movie-info { padding: 14px; } }
+.movie-info{padding:24px 26px;display:flex;flex-direction:column}
+@media(max-width:600px){.movie-info{padding:14px}}
 
-.meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 10px; }
-.badge {
-  display: inline-flex; align-items: center;
-  font-size: 0.73rem; font-weight: 600; letter-spacing: 0.03em;
-  padding: 3px 8px; border-radius: 5px; font-variant-numeric: tabular-nums;
-}
-.badge-year    { background: var(--surface-3); color: var(--text-2); }
-.badge-score   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(245,200,66,0.2); }
-.badge-cert    { background: var(--surface-3); color: var(--text); border: 1px solid var(--border-2); }
-.badge-runtime { background: var(--surface-3); color: var(--text-2); }
+.meta-row{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;font-size:.73rem;font-weight:600;letter-spacing:.03em;padding:3px 8px;border-radius:5px;font-variant-numeric:tabular-nums}
+.badge-year{background:var(--surface-3);color:var(--text-2)}
+.badge-score{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(245,200,66,.2)}
+.badge-rt{background:rgba(250,60,0,.1);color:#fa5a1e;border:1px solid rgba(250,60,0,.2)}
+.badge-cert{background:var(--surface-3);color:var(--text);border:1px solid var(--border-2)}
+.badge-runtime{background:var(--surface-3);color:var(--text-2)}
 
-.movie-title {
-  font-size: clamp(1.2rem, 2.8vw, 1.7rem); font-weight: 800;
-  letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; margin-bottom: 8px;
-}
-.movie-tagline { font-size: 0.86rem; color: var(--accent); font-style: italic; margin-bottom: 10px; opacity: 0.82; }
-.movie-overview {
-  font-size: 0.88rem; color: var(--text-2); line-height: 1.65; flex: 1;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden;
-}
-.movie-genres { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.genre-chip { font-size: 0.73rem; color: var(--text-2); border: 1px solid var(--border-2); border-radius: 20px; padding: 3px 10px; }
-.movie-crew { margin-top: 12px; font-size: 0.78rem; color: var(--text-3); line-height: 1.7; }
-.movie-crew span { color: var(--text-2); }
+.movie-title{font-size:clamp(1.2rem,2.8vw,1.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;text-wrap:balance;margin-bottom:8px}
+.movie-overview{font-size:.88rem;color:var(--text-2);line-height:1.65;flex:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden}
+.movie-genres{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.genre-chip{font-size:.73rem;color:var(--text-2);border:1px solid var(--border-2);border-radius:20px;padding:3px 10px}
+.movie-crew{margin-top:12px;font-size:.78rem;color:var(--text-3);line-height:1.7}
+.movie-crew span{color:var(--text-2)}
 
-/* Streaming */
-.streaming-section { border-top: 1px solid var(--border); padding: 22px 26px; }
-@media (max-width: 600px) { .streaming-section { padding: 14px 16px; } }
+.streaming-section{border-top:1px solid var(--border);padding:22px 26px}
+@media(max-width:600px){.streaming-section{padding:14px 16px}}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.jw-tag{font-size:.68rem;color:var(--text-3);display:flex;align-items:center;gap:5px}
+.jw-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.jw-dot.loading{background:var(--accent);animation:pulse 1.2s ease infinite}
+.jw-dot.err{background:var(--red);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
-.jw-tag { font-size: 0.68rem; color: var(--text-3); display: flex; align-items: center; gap: 5px; }
-.jw-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
-.jw-dot.loading { background: var(--accent); animation: pulse 1.2s ease infinite; }
-.jw-dot.err     { background: var(--red); animation: none; }
-@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+.streaming-groups{display:flex;flex-direction:column;gap:18px}
+.group-label{font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);margin-bottom:9px}
+.provider-list{display:flex;flex-wrap:wrap;gap:9px}
 
-.streaming-groups { display: flex; flex-direction: column; gap: 18px; }
-.group-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-3); margin-bottom: 9px; }
-.provider-list { display: flex; flex-wrap: wrap; gap: 9px; }
+.provider-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:9px;font-size:.82rem;font-weight:600;border:1px solid transparent;transition:filter .15s,transform .1s;text-decoration:none}
+.provider-chip:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.chip-price{font-size:.72rem;font-weight:500;opacity:.75;font-variant-numeric:tabular-nums}
 
-.provider-chip {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 7px 13px; border-radius: 9px;
-  font-size: 0.82rem; font-weight: 600; border: 1px solid transparent;
-  transition: filter 0.15s, transform 0.1s; text-decoration: none;
-}
-.provider-chip:hover { filter: brightness(1.12); transform: translateY(-1px); }
-.chip-price { font-size: 0.72rem; font-weight: 500; opacity: 0.75; font-variant-numeric: tabular-nums; }
+.p-netflix{background:rgba(229,9,20,.12);color:#ff4d58;border-color:rgba(229,9,20,.25)}
+.p-max{background:rgba(0,52,255,.12);color:#5b8aff;border-color:rgba(0,52,255,.25)}
+.p-disney{background:rgba(17,60,207,.12);color:#6b8fff;border-color:rgba(17,60,207,.25)}
+.p-hulu{background:rgba(28,231,131,.10);color:#1CE783;border-color:rgba(28,231,131,.2)}
+.p-prime{background:rgba(0,168,225,.10);color:#00A8E1;border-color:rgba(0,168,225,.2)}
+.p-apple{background:rgba(200,200,210,.10);color:#c8c8d8;border-color:rgba(200,200,210,.2)}
+.p-peacock{background:rgba(255,140,0,.10);color:#FFA040;border-color:rgba(255,140,0,.2)}
+.p-paramount{background:rgba(58,184,255,.10);color:#3AB8FF;border-color:rgba(58,184,255,.2)}
+.p-mubi{background:rgba(255,255,255,.04);color:#9090a0;border-color:rgba(255,255,255,.1)}
+.p-shudder{background:rgba(180,0,0,.12);color:#e06060;border-color:rgba(180,0,0,.2)}
+.p-default{background:var(--surface-2);color:var(--text-2);border-color:var(--border-2)}
 
-.p-netflix   { background: rgba(229,9,20,0.12);   color: #ff4d58; border-color: rgba(229,9,20,0.25); }
-.p-max       { background: rgba(0,52,255,0.12);   color: #5b8aff; border-color: rgba(0,52,255,0.25); }
-.p-disney    { background: rgba(17,60,207,0.12);  color: #6b8fff; border-color: rgba(17,60,207,0.25); }
-.p-hulu      { background: rgba(28,231,131,0.10); color: #1CE783; border-color: rgba(28,231,131,0.2); }
-.p-prime     { background: rgba(0,168,225,0.10);  color: #00A8E1; border-color: rgba(0,168,225,0.2); }
-.p-apple     { background: rgba(200,200,210,0.10);color: #c8c8d8; border-color: rgba(200,200,210,0.2); }
-.p-peacock   { background: rgba(255,140,0,0.10);  color: #FFA040; border-color: rgba(255,140,0,0.2); }
-.p-paramount { background: rgba(58,184,255,0.10); color: #3AB8FF; border-color: rgba(58,184,255,0.2); }
-.p-mubi      { background: rgba(255,255,255,0.04);color: #9090a0; border-color: rgba(255,255,255,0.1); }
-.p-shudder   { background: rgba(180,0,0,0.12);    color: #e06060; border-color: rgba(180,0,0,0.2); }
-.p-default   { background: var(--surface-2); color: var(--text-2); border-color: var(--border-2); }
+.no-streaming{color:var(--text-3);font-size:.88rem;padding:6px 0}
 
-.no-streaming { color: var(--text-3); font-size: 0.88rem; padding: 6px 0; }
+.skel{display:flex;gap:9px;flex-wrap:wrap}
+.skel-chip{height:36px;border-radius:9px;background:var(--surface-2);animation:shimmer 1.4s ease infinite}
+@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
 
-.stream-skeleton { display: flex; gap: 9px; flex-wrap: wrap; }
-.skel-chip { height: 36px; border-radius: 9px; background: var(--surface-2); animation: shimmer 1.4s ease infinite; }
-@keyframes shimmer { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
+.series-section{border-top:1px solid var(--border);padding:22px 26px}
+@media(max-width:600px){.series-section{padding:14px 16px}}
+.series-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:14px}
+.series-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--surface-3) transparent}
+.series-scroll::-webkit-scrollbar{height:4px}
+.series-scroll::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:2px}
+.series-item{flex-shrink:0;width:96px;cursor:pointer;transition:transform .15s}
+.series-item:hover{transform:translateY(-3px)}
+.series-item.active .series-poster-wrap{outline:2px solid var(--accent);outline-offset:2px}
+.series-poster-wrap{border-radius:8px;overflow:hidden;background:var(--surface-3);aspect-ratio:2/3;margin-bottom:7px}
+.series-poster{width:100%;height:100%;object-fit:cover;display:block}
+.series-no-poster{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:.65rem}
+.series-title{font-size:.73rem;font-weight:600;line-height:1.3;color:var(--text);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.series-year{font-size:.68rem;color:var(--text-3);font-variant-numeric:tabular-nums;margin-top:2px}
 
-/* Collection */
-.collection-section { border-top: 1px solid var(--border); padding: 22px 26px; }
-@media (max-width: 600px) { .collection-section { padding: 14px 16px; } }
-.collection-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
-.collection-scroll {
-  display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px;
-  scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent;
-}
-.collection-scroll::-webkit-scrollbar { height: 4px; }
-.collection-scroll::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
-.coll-item { flex-shrink: 0; width: 96px; cursor: pointer; transition: transform 0.15s; }
-.coll-item:hover { transform: translateY(-3px); }
-.coll-item.active .coll-poster-wrap { outline: 2px solid var(--accent); outline-offset: 2px; }
-.coll-poster-wrap { border-radius: 8px; overflow: hidden; background: var(--surface-3); aspect-ratio: 2/3; margin-bottom: 7px; }
-.coll-poster { width: 100%; height: 100%; object-fit: cover; display: block; }
-.coll-no-poster { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 0.65rem; }
-.coll-title { font-size: 0.73rem; font-weight: 600; line-height: 1.3; color: var(--text); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-.coll-year { font-size: 0.68rem; color: var(--text-3); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.footer{text-align:center;padding:12px 0 48px;color:var(--text-3);font-size:.76rem}
+.footer a{color:var(--text-3);text-decoration:underline}
 
-/* Footer */
-.footer { text-align: center; padding: 12px 0 48px; color: var(--text-3); font-size: 0.76rem; }
-.footer a { color: var(--text-3); text-decoration: underline; }
-
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
 <div class="shell">
-
   <header>
     <div class="logo">Stream<em>Check</em></div>
     <button class="hdr-btn" id="theme-btn" onclick="toggleTheme()">Light</button>
   </header>
 
   <div class="hero">
-    <div class="hero-eyebrow">TMDB · JustWatch · Residential proxy</div>
+    <div class="hero-eyebrow">JustWatch · Residential proxy · No API keys</div>
     <h1>Find where to watch<br>any movie — for real</h1>
-    <p class="hero-sub">Streaming availability checked live. Age ratings, runtime,<br>and every film in the series.</p>
+    <p class="hero-sub">Streaming availability checked live through a residential IP.<br>Age ratings, scores, and every film in the series.</p>
 
     <div class="search-bar">
       <input type="text" id="search-input" placeholder="Search for a movie…"
@@ -320,19 +225,18 @@ header {
   <div id="results"></div>
 
   <div class="footer">
-    Movie data by <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a> ·
-    Streaming by <a href="https://www.justwatch.com" target="_blank" rel="noopener">JustWatch</a>
+    Data by <a href="https://www.justwatch.com" target="_blank" rel="noopener">JustWatch</a>
+    via residential proxy · Not affiliated
   </div>
 </div>
 
 <script>
-const IMG_BASE = 'https://image.tmdb.org/t/p';
+const JW_IMG = 'https://images.justwatch.com';
 
 let currentRegion  = localStorage.getItem('sc_region') || 'US';
 let currentMovieId = null;
 let debounceTimer  = null;
 
-// ─── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('region-select').value = currentRegion;
   const saved = localStorage.getItem('sc_theme');
@@ -352,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ─── Theme ─────────────────────────────────────────────────────────────────────
 function toggleTheme() {
   const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
@@ -364,42 +267,45 @@ function updateThemeBtn() {
     || (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
   document.getElementById('theme-btn').textContent = isDark ? 'Light' : 'Dark';
 }
-
-// ─── Region ────────────────────────────────────────────────────────────────────
 function onRegionChange() {
   currentRegion = document.getElementById('region-select').value;
   localStorage.setItem('sc_region', currentRegion);
   if (currentMovieId) loadMovie(currentMovieId);
 }
 
-// ─── API call ──────────────────────────────────────────────────────────────────
 async function api(path) {
-  const res = await fetch(path);
+  const res  = await fetch(path);
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   return data;
 }
 
-// ─── Suggestions ───────────────────────────────────────────────────────────────
+function jwPoster(url, size) {
+  if (!url) return null;
+  // JustWatch posterUrl is a path template like /poster/123/s{size}/file.jpg
+  return JW_IMG + url.replace('{size}', size || '332').replace(/\/s\d+\//, `/s${size || 332}/`);
+}
+
+// ─── Suggestions ──────────────────────────────────────────────────────────────
 async function fetchSugg(q) {
   try {
-    const d = await api(`/api/search?q=${encodeURIComponent(q)}&type=suggest`);
+    const d = await api(`/api/search?q=${encodeURIComponent(q)}&type=suggest&region=${currentRegion}`);
     renderSugg(d.results || []);
-  } catch(e) { closeSugg(); }
+  } catch { closeSugg(); }
 }
 function renderSugg(movies) {
   const el = document.getElementById('suggestions');
   if (!movies.length) { closeSugg(); return; }
   el.innerHTML = movies.map(m => {
-    const yr  = m.release_date ? m.release_date.slice(0,4) : '—';
-    const img = m.poster_path
-      ? `<img class="sugg-poster" src="${IMG_BASE}/w92${m.poster_path}" alt="" loading="lazy">`
+    const poster = m.poster ? jwPoster(m.poster, 92) : null;
+    const img = poster
+      ? `<img class="sugg-poster" src="${esc(poster)}" alt="" loading="lazy" onerror="this.style.display='none'">`
       : `<div class="sugg-ph">?</div>`;
-    return `<div class="suggestion-item" role="option" onclick="selectMovie(${m.id}, ${JSON.stringify(m.title)})">
+    return `<div class="suggestion-item" role="option" onclick="selectMovie(${JSON.stringify(m.id)}, ${JSON.stringify(m.title)})">
       ${img}
       <div>
         <div class="sugg-title">${esc(m.title)}</div>
-        <div class="sugg-year">${yr}</div>
+        <div class="sugg-year">${m.year || '—'}</div>
       </div>
     </div>`;
   }).join('');
@@ -412,75 +318,102 @@ function selectMovie(id, title) {
   loadMovie(id);
 }
 
-// ─── Search ────────────────────────────────────────────────────────────────────
+// ─── Search ───────────────────────────────────────────────────────────────────
 async function handleSearch() {
   const q = document.getElementById('search-input').value.trim();
   if (!q) return;
   closeSugg();
-  setSearchLoading(true);
+  setBtnLoading(true);
   showLoading('Searching…');
   try {
-    const d = await api(`/api/search?q=${encodeURIComponent(q)}`);
+    const d = await api(`/api/search?q=${encodeURIComponent(q)}&region=${currentRegion}`);
     const results = d.results || [];
     if (!results.length) {
-      showError(`No movies found for "${esc(q)}". Try checking the spelling or using the original language title.`);
+      showError(`No results for "${esc(q)}" — try the exact title or check spelling.`);
       return;
     }
-    // Best match: exact title first, then highest popularity
     const ql = q.toLowerCase();
-    const exact = results.find(m => m.title.toLowerCase() === ql)
+    const best = results.find(m => m.title.toLowerCase() === ql)
       || results.find(m => m.title.toLowerCase().includes(ql))
       || results[0];
-    loadMovie(exact.id);
-  } catch(e) {
-    showError(e.message.includes('TMDB_KEY') ? 'The site needs a TMDB API key configured — contact the site owner.' : e.message);
+    loadMovie(best.id);
+  } catch (e) {
+    showError(e.message);
   } finally {
-    setSearchLoading(false);
+    setBtnLoading(false);
   }
 }
-function setSearchLoading(on) {
-  document.getElementById('search-btn').disabled = on;
-  document.getElementById('search-btn').textContent = on ? '…' : 'Search';
+function setBtnLoading(on) {
+  const btn = document.getElementById('search-btn');
+  btn.disabled = on;
+  btn.textContent = on ? '…' : 'Search';
 }
 
 // ─── Load movie ────────────────────────────────────────────────────────────────
 async function loadMovie(id) {
   currentMovieId = id;
-  showLoading('Loading movie…');
+  showLoading('Loading…');
   try {
-    const d = await api(`/api/movie?id=${id}`);
-    renderMovie(d.details, d.releases, d.collection);
-    fetchStreaming(d.details.title, d.details.release_date?.slice(0,4) || '');
-  } catch(e) {
+    const movie = await api(`/api/movie?id=${encodeURIComponent(id)}&region=${currentRegion}`);
+    renderMovie(movie);
+  } catch (e) {
     showError(e.message);
   }
 }
 
-// ─── Fetch streaming ───────────────────────────────────────────────────────────
-async function fetchStreaming(title, year) {
-  const el      = document.getElementById('streaming-body');
-  const dotEl   = document.getElementById('jw-dot');
-  const tagEl   = document.getElementById('jw-tag-text');
-  if (!el) return;
-  const regionName = regionLabel();
-  try {
-    const d = await api(`/api/streaming?title=${encodeURIComponent(title)}&year=${encodeURIComponent(year)}&region=${encodeURIComponent(currentRegion)}`);
-    renderStreamingBody(el, d, regionName);
-    if (dotEl) dotEl.className = 'jw-dot';
-    if (tagEl) tagEl.textContent = 'Live · JustWatch via proxy';
-  } catch(e) {
-    if (dotEl) dotEl.className = 'jw-dot err';
-    if (tagEl) tagEl.textContent = 'Streaming check failed';
-    if (el) el.innerHTML = `<div class="no-streaming">Couldn't fetch streaming data. ${esc(e.message)}</div>`;
-  }
+// ─── Render movie ─────────────────────────────────────────────────────────────
+function renderMovie(m) {
+  const runtime = m.runtime ? `${Math.floor(m.runtime/60)}h ${m.runtime%60}m` : null;
+  const posterSrc = m.poster ? jwPoster(m.poster, 342) : null;
+  const genreChips = m.genres.map(g => `<span class="genre-chip">${esc(g)}</span>`).join('');
+
+  const poster = posterSrc
+    ? `<img class="movie-poster" src="${esc(posterSrc)}" alt="${esc(m.title)} poster" loading="lazy" onerror="this.outerHTML='<div class=no-poster>No poster</div>'">`
+    : `<div class="no-poster"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>No poster</div>`;
+
+  const regionLabel = document.getElementById('region-select').options[document.getElementById('region-select').selectedIndex].text;
+
+  const streamHTML = buildStreamingHTML(m.streaming, regionLabel);
+  const seriesHTML = m.series && m.series.length > 1 ? buildSeriesHTML(m.series, m.id) : '';
+
+  document.getElementById('results').innerHTML = `
+    <div class="movie-card">
+      <div class="movie-main">
+        <div class="movie-poster-wrap">${poster}</div>
+        <div class="movie-info">
+          <div class="meta-row">
+            ${m.year    ? `<span class="badge badge-year">${m.year}</span>` : ''}
+            ${m.imdbScore ? `<span class="badge badge-score">IMDb ${m.imdbScore.toFixed(1)}</span>` : ''}
+            ${m.tomatoMeter != null ? `<span class="badge badge-rt">🍅 ${m.tomatoMeter}%</span>` : ''}
+            ${m.cert    ? `<span class="badge badge-cert">${esc(m.cert)}</span>` : ''}
+            ${runtime   ? `<span class="badge badge-runtime">${runtime}</span>` : ''}
+          </div>
+          <h2 class="movie-title">${esc(m.title)}</h2>
+          <p class="movie-overview">${esc(m.overview || 'No synopsis available.')}</p>
+          ${genreChips ? `<div class="movie-genres">${genreChips}</div>` : ''}
+          <div class="movie-crew">
+            ${m.directors.length ? `Directed by <span>${esc(m.directors.join(', '))}</span><br>` : ''}
+            ${m.cast.length ? `Starring <span>${esc(m.cast.map(c => c.name).join(', '))}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${streamHTML}
+      ${seriesHTML}
+    </div>`;
 }
 
-function renderStreamingBody(el, data, regionName) {
-  if (!data.found || !data.providers?.length) {
-    el.innerHTML = `<div class="no-streaming">Not available to stream in ${esc(regionName)} right now.</div>`;
-    return;
+function buildStreamingHTML(streaming, regionLabel) {
+  const header = `
+    <div class="section-header">
+      <div class="section-label">Where to watch · ${esc(regionLabel)}</div>
+      <div class="jw-tag"><div class="jw-dot"></div><span>JustWatch via proxy</span></div>
+    </div>`;
+
+  if (!streaming?.found || !streaming.providers?.length) {
+    return `<div class="streaming-section">${header}<div class="no-streaming">Not available to stream in ${esc(regionLabel)} right now.</div></div>`;
   }
-  const html = Object.entries(data.grouped || {}).map(([type, providers]) => {
+
+  const groups = Object.entries(streaming.grouped || {}).map(([type, providers]) => {
     const chips = providers.map(p => {
       const cls   = providerClass(p.name);
       const price = p.price ? `<span class="chip-price">${esc(p.price)}</span>` : '';
@@ -490,123 +423,51 @@ function renderStreamingBody(el, data, regionName) {
     }).join('');
     return `<div><div class="group-label">${esc(type)}</div><div class="provider-list">${chips}</div></div>`;
   }).join('');
-  el.innerHTML = `<div class="streaming-groups">${html}</div>`;
+
+  return `<div class="streaming-section">${header}<div class="streaming-groups">${groups}</div></div>`;
+}
+
+function buildSeriesHTML(series, currentId) {
+  const items = series.map(m => {
+    const src = m.poster ? jwPoster(m.poster, 185) : null;
+    const img = src
+      ? `<img class="series-poster" src="${esc(src)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+      : `<div class="series-no-poster">?</div>`;
+    return `<div class="series-item ${m.id === currentId ? 'active' : ''}" onclick="loadMovie(${JSON.stringify(m.id)})" title="${esc(m.title)}">
+      <div class="series-poster-wrap">${img}</div>
+      <div class="series-title">${esc(m.title)}</div>
+      ${m.year ? `<div class="series-year">${m.year}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  return `<div class="series-section">
+    <div class="series-label">More in this series · ${series.length} films</div>
+    <div class="series-scroll">${items}</div>
+  </div>`;
 }
 
 function providerClass(name) {
   const n = name.toLowerCase();
-  if (n.includes('netflix'))               return 'p-netflix';
-  if (n.includes('max') || n.includes('hbo')) return 'p-max';
-  if (n.includes('disney'))               return 'p-disney';
-  if (n.includes('hulu'))                 return 'p-hulu';
+  if (n.includes('netflix'))                       return 'p-netflix';
+  if (n.includes('max') || n.includes('hbo'))      return 'p-max';
+  if (n.includes('disney'))                        return 'p-disney';
+  if (n.includes('hulu'))                          return 'p-hulu';
   if (n.includes('prime') || n.includes('amazon')) return 'p-prime';
-  if (n.includes('apple'))               return 'p-apple';
-  if (n.includes('peacock'))             return 'p-peacock';
-  if (n.includes('paramount'))           return 'p-paramount';
-  if (n.includes('mubi'))               return 'p-mubi';
-  if (n.includes('shudder'))            return 'p-shudder';
+  if (n.includes('apple'))                         return 'p-apple';
+  if (n.includes('peacock'))                       return 'p-peacock';
+  if (n.includes('paramount'))                     return 'p-paramount';
+  if (n.includes('mubi'))                          return 'p-mubi';
+  if (n.includes('shudder'))                       return 'p-shudder';
   return 'p-default';
 }
 
-// ─── Render movie card ─────────────────────────────────────────────────────────
-function renderMovie(movie, releases, collection) {
-  const year   = movie.release_date ? movie.release_date.slice(0,4) : '';
-  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
-  const runtime = movie.runtime ? `${Math.floor(movie.runtime/60)}h ${movie.runtime%60}m` : null;
-  const directors = (movie.credits?.crew||[]).filter(p=>p.job==='Director').map(p=>p.name);
-  const cast      = (movie.credits?.cast||[]).slice(0,4).map(p=>p.name);
-  const genreChips = (movie.genres||[]).map(g=>`<span class="genre-chip">${esc(g.name)}</span>`).join('');
-
-  // Age cert: try selected region, fall back to US
-  const certEntry = (releases?.results||[]).find(r=>r.iso_3166_1===currentRegion)
-    || (releases?.results||[]).find(r=>r.iso_3166_1==='US');
-  const cert = certEntry?.release_dates?.find(d=>d.certification)?.certification || '';
-
-  const poster = movie.poster_path
-    ? `<img class="movie-poster" src="${IMG_BASE}/w342${movie.poster_path}" alt="${esc(movie.title)} poster" loading="lazy">`
-    : `<div class="no-poster"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>No poster</div>`;
-
-  const collHTML = collection ? buildCollectionHTML(collection, movie.id) : '';
-
-  document.getElementById('results').innerHTML = `
-    <div class="movie-card">
-      <div class="movie-main">
-        <div class="movie-poster-wrap">${poster}</div>
-        <div class="movie-info">
-          <div class="meta-row">
-            ${year    ? `<span class="badge badge-year">${year}</span>` : ''}
-            ${rating  ? `<span class="badge badge-score">★ ${rating}</span>` : ''}
-            ${cert    ? `<span class="badge badge-cert">${esc(cert)}</span>` : ''}
-            ${runtime ? `<span class="badge badge-runtime">${runtime}</span>` : ''}
-          </div>
-          <h2 class="movie-title">${esc(movie.title)}</h2>
-          ${movie.tagline ? `<div class="movie-tagline">"${esc(movie.tagline)}"</div>` : ''}
-          <p class="movie-overview">${esc(movie.overview||'No synopsis available.')}</p>
-          ${genreChips ? `<div class="movie-genres">${genreChips}</div>` : ''}
-          <div class="movie-crew">
-            ${directors.length ? `Directed by <span>${esc(directors.join(', '))}</span><br>` : ''}
-            ${cast.length      ? `Starring <span>${esc(cast.join(', '))}</span>` : ''}
-          </div>
-        </div>
-      </div>
-
-      <div class="streaming-section">
-        <div class="section-header">
-          <div class="section-label">Where to watch · ${esc(regionLabel())}</div>
-          <div class="jw-tag">
-            <div class="jw-dot loading" id="jw-dot"></div>
-            <span id="jw-tag-text">Checking via proxy…</span>
-          </div>
-        </div>
-        <div id="streaming-body">
-          <div class="stream-skeleton">
-            <div class="skel-chip" style="width:110px"></div>
-            <div class="skel-chip" style="width:88px"></div>
-            <div class="skel-chip" style="width:130px"></div>
-            <div class="skel-chip" style="width:96px"></div>
-          </div>
-        </div>
-      </div>
-
-      ${collHTML}
-    </div>`;
-}
-
-// ─── Collection ────────────────────────────────────────────────────────────────
-function buildCollectionHTML(collection, currentId) {
-  const sorted = [...collection.parts].sort((a,b)=>
-    (a.release_date||'9999').localeCompare(b.release_date||'9999')
-  );
-  if (sorted.length < 2) return '';
-  const items = sorted.map(m => {
-    const yr  = m.release_date ? m.release_date.slice(0,4) : '';
-    const img = m.poster_path
-      ? `<img class="coll-poster" src="${IMG_BASE}/w185${m.poster_path}" alt="" loading="lazy">`
-      : `<div class="coll-no-poster">?</div>`;
-    return `<div class="coll-item ${m.id===currentId?'active':''}" onclick="loadMovie(${m.id})" title="${esc(m.title)}">
-      <div class="coll-poster-wrap">${img}</div>
-      <div class="coll-title">${esc(m.title)}</div>
-      ${yr ? `<div class="coll-year">${yr}</div>` : ''}
-    </div>`;
-  }).join('');
-  return `<div class="collection-section">
-    <div class="collection-label">${esc(collection.name)} · ${sorted.length} films</div>
-    <div class="collection-scroll">${items}</div>
-  </div>`;
-}
-
-// ─── UI helpers ────────────────────────────────────────────────────────────────
 function showLoading(msg) {
-  document.getElementById('results').innerHTML = `
-    <div class="loading-state"><div class="spinner"></div><p>${esc(msg||'Loading…')}</p></div>`;
+  document.getElementById('results').innerHTML =
+    `<div class="loading-state"><div class="spinner"></div><p>${esc(msg)}</p></div>`;
 }
 function showError(msg) {
-  document.getElementById('results').innerHTML = `
-    <div class="error-state"><strong>Couldn't load</strong><p>${msg}</p></div>`;
-}
-function regionLabel() {
-  const sel = document.getElementById('region-select');
-  return sel.options[sel.selectedIndex].text;
+  document.getElementById('results').innerHTML =
+    `<div class="error-state"><strong>Couldn't load</strong><p>${msg}</p></div>`;
 }
 function esc(s) {
   return String(s)
