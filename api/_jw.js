@@ -1,8 +1,4 @@
 const fetch = require('node-fetch');
-const { HttpsProxyAgent } = require('https-proxy-agent');
-
-const PROXY_URL  = `http://${process.env.PROXY_USER||'PwWM1JFbPPP3oMOu'}:${process.env.PROXY_PASS||'mnGUfFPFq21Tj7na'}@${process.env.PROXY_HOST||'geo.iproyal.com'}:${process.env.PROXY_PORT||'22225'}`;
-const proxyAgent = new HttpsProxyAgent(PROXY_URL);
 
 const HEADERS = {
   'Content-Type':    'application/json',
@@ -12,42 +8,14 @@ const HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9',
 };
 
-const JW_GQL = 'https://apis.justwatch.com/graphql';
-
-async function _post(agent, timeout) {
-  return (body) => fetch(JW_GQL, {
-    method: 'POST',
+async function gql(query, variables, timeout = 12000) {
+  const res = await fetch('https://apis.justwatch.com/graphql', {
+    method:  'POST',
     headers: HEADERS,
-    body,
-    agent,
+    body:    JSON.stringify({ query, variables }),
     timeout,
   });
-}
-
-async function gql(query, variables, timeout = 12000) {
-  const body = JSON.stringify({ query, variables });
-
-  // Try direct first (faster, no proxy overhead)
-  let res;
-  try {
-    res = await fetch(JW_GQL, { method: 'POST', headers: HEADERS, body, timeout: 8000 });
-  } catch (_) {
-    // Direct failed — fall back to residential proxy
-    res = await fetch(JW_GQL, { method: 'POST', headers: HEADERS, body, agent: proxyAgent, timeout });
-  }
-
-  if (!res.ok) {
-    // If direct returned an error status, retry via proxy
-    if (res.status >= 400) {
-      const r2 = await fetch(JW_GQL, { method: 'POST', headers: HEADERS, body, agent: proxyAgent, timeout });
-      if (!r2.ok) throw new Error(`JustWatch ${r2.status}`);
-      const j2 = await r2.json();
-      if (j2.errors?.length) throw new Error(j2.errors[0].message);
-      return j2.data;
-    }
-    throw new Error(`JustWatch ${res.status}`);
-  }
-
+  if (!res.ok) throw new Error(`JustWatch ${res.status}`);
   const json = await res.json();
   if (json.errors?.length) throw new Error(json.errors[0].message);
   return json.data;
@@ -66,7 +34,7 @@ const JW_IMG      = 'https://images.justwatch.com';
 
 function locale(region) {
   const l = LOCALE_MAP[region] || 'en_US';
-  return { country: l.split('_')[1], language: l.split('_')[0].toLowerCase() };
+  return { country: l.split('_')[1], language: l.split('_')[0] };
 }
 
 module.exports = { gql, locale, MONO_LABELS, TYPE_ORDER, JW_IMG, LOCALE_MAP };
