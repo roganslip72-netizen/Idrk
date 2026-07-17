@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StreamCheck — Find where to watch any movie</title>
 <style>
-/* ─── Tokens ─── */
 :root {
   --bg:        #0C0C0E;
   --surface:   #141417;
@@ -21,23 +20,14 @@
   --border-2:  rgba(255,255,255,0.12);
   --red:       #E84545;
   --green:     #3DD68C;
-  --radius:    10px;
   --radius-lg: 16px;
 }
 @media (prefers-color-scheme: light) {
   :root {
-    --bg:        #F8F7F4;
-    --surface:   #FFFFFF;
-    --surface-2: #F1F0EC;
-    --surface-3: #E8E7E2;
-    --accent:    #C8960A;
-    --accent-dim:  rgba(200,150,10,0.10);
-    --accent-glow: rgba(200,150,10,0.20);
-    --text:      #1A1A1E;
-    --text-2:    #5C5C66;
-    --text-3:    #A0A0A8;
-    --border:    rgba(0,0,0,0.07);
-    --border-2:  rgba(0,0,0,0.12);
+    --bg: #F8F7F4; --surface: #FFFFFF; --surface-2: #F1F0EC; --surface-3: #E8E7E2;
+    --accent: #C8960A; --accent-dim: rgba(200,150,10,0.10); --accent-glow: rgba(200,150,10,0.20);
+    --text: #1A1A1E; --text-2: #5C5C66; --text-3: #A0A0A8;
+    --border: rgba(0,0,0,0.07); --border-2: rgba(0,0,0,0.12);
   }
 }
 :root[data-theme="dark"] {
@@ -53,85 +43,51 @@
   --border: rgba(0,0,0,0.07); --border-2: rgba(0,0,0,0.12);
 }
 
-/* ─── Reset ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100dvh;
-  line-height: 1.5;
+  background: var(--bg); color: var(--text);
+  min-height: 100dvh; line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 button { cursor: pointer; font: inherit; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
-/* ─── Layout ─── */
 .shell { max-width: 940px; margin: 0 auto; padding: 0 20px; }
 
-/* ─── Header ─── */
+/* Header */
 header {
   padding: 28px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.logo {
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
+.logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em; }
 .logo em { color: var(--accent); font-style: normal; }
-.header-actions { display: flex; gap: 8px; align-items: center; }
 .hdr-btn {
-  background: var(--surface-2);
-  border: 1px solid var(--border-2);
-  color: var(--text-2);
-  border-radius: 8px;
-  padding: 6px 13px;
-  font-size: 0.8rem;
-  font-weight: 500;
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  color: var(--text-2); border-radius: 8px; padding: 6px 13px;
+  font-size: 0.8rem; font-weight: 500;
   transition: background 0.15s, color 0.15s;
 }
 .hdr-btn:hover { background: var(--surface-3); color: var(--text); }
 
-/* ─── Hero ─── */
-.hero {
-  padding: 52px 0 40px;
-  text-align: center;
-}
+/* Hero */
+.hero { padding: 52px 0 40px; text-align: center; }
 .hero-eyebrow {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 14px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 14px;
 }
 .hero h1 {
-  font-size: clamp(1.8rem, 4vw, 2.55rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin-bottom: 10px;
+  font-size: clamp(1.8rem, 4vw, 2.55rem); font-weight: 700;
+  line-height: 1.15; letter-spacing: -0.02em;
+  text-wrap: balance; margin-bottom: 10px;
 }
-.hero-sub {
-  color: var(--text-2);
-  font-size: 1rem;
-  margin-bottom: 36px;
-  text-wrap: balance;
-}
+.hero-sub { color: var(--text-2); font-size: 1rem; margin-bottom: 36px; text-wrap: balance; }
+
 .search-bar {
-  display: flex;
-  max-width: 580px;
-  margin: 0 auto;
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: 14px;
-  overflow: hidden;
+  display: flex; max-width: 580px; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: 14px; overflow: hidden;
   box-shadow: 0 4px 32px rgba(0,0,0,0.28);
   transition: box-shadow 0.2s, border-color 0.2s;
 }
@@ -140,176 +96,96 @@ header {
   box-shadow: 0 4px 32px rgba(0,0,0,0.28), 0 0 0 3px var(--accent-glow);
 }
 #search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-size: 1.05rem;
-  padding: 15px 18px;
-  font-family: inherit;
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--text); font-size: 1.05rem; padding: 15px 18px; font-family: inherit;
 }
 #search-input::placeholder { color: var(--text-3); }
 #search-btn {
-  background: var(--accent);
-  color: #0C0C0E;
-  font-size: 0.88rem;
-  font-weight: 700;
-  padding: 0 24px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-  transition: opacity 0.15s;
+  background: var(--accent); color: #0C0C0E;
+  font-size: 0.88rem; font-weight: 700;
+  padding: 0 26px; letter-spacing: 0.04em; text-transform: uppercase;
+  flex-shrink: 0; transition: opacity 0.15s;
 }
 #search-btn:hover { opacity: 0.88; }
+#search-btn:disabled { opacity: 0.5; pointer-events: none; }
 
 .region-row {
-  margin-top: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: var(--text-3);
-  font-size: 0.82rem;
+  margin-top: 14px; display: flex; align-items: center;
+  justify-content: center; gap: 8px; color: var(--text-3); font-size: 0.82rem;
 }
 #region-select {
-  background: var(--surface-2);
-  border: 1px solid var(--border-2);
-  color: var(--text-2);
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-size: 0.82rem;
-  font-family: inherit;
-  cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--border-2);
+  color: var(--text-2); border-radius: 6px; padding: 4px 8px;
+  font-size: 0.82rem; font-family: inherit; cursor: pointer;
 }
 
-/* ─── Suggestions ─── */
+/* Suggestions */
 .suggestions-wrap { max-width: 580px; margin: 8px auto 0; }
 .suggestions {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  display: none;
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: none;
 }
 .suggestions.open { display: block; }
 .suggestion-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.1s;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; cursor: pointer;
+  border-bottom: 1px solid var(--border); transition: background 0.1s;
 }
 .suggestion-item:last-child { border-bottom: none; }
 .suggestion-item:hover { background: var(--surface-2); }
-.sugg-poster {
-  width: 36px; height: 54px;
-  object-fit: cover;
-  border-radius: 4px;
-  background: var(--surface-3);
-  flex-shrink: 0;
-}
-.sugg-placeholder {
-  width: 36px; height: 54px;
-  background: var(--surface-3);
-  border-radius: 4px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-3);
-  font-size: 0.7rem;
-}
+.sugg-poster { width: 36px; height: 54px; object-fit: cover; border-radius: 4px; background: var(--surface-3); flex-shrink: 0; }
+.sugg-ph { width: 36px; height: 54px; background: var(--surface-3); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 0.7rem; }
 .sugg-title { font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sugg-year  { color: var(--text-2); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
 
-/* ─── Results ─── */
+/* Results */
 #results { padding-bottom: 60px; }
 
-.loading-state {
-  text-align: center;
-  padding: 60px 0;
-  color: var(--text-2);
-}
+.loading-state { text-align: center; padding: 60px 0; color: var(--text-2); }
 .spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border-2);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.75s linear infinite;
-  margin: 0 auto 16px;
+  width: 36px; height: 36px; border: 3px solid var(--border-2);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.75s linear infinite; margin: 0 auto 16px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 
 .error-state {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  text-align: center;
-  color: var(--text-2);
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius-lg); padding: 32px; text-align: center; color: var(--text-2);
 }
 .error-state strong { color: var(--red); display: block; margin-bottom: 8px; }
 
-/* ─── Movie Card ─── */
+/* Movie card */
 .movie-card {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-bottom: 24px;
+  background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px;
   animation: fadeUp 0.28s ease both;
 }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .movie-card { animation: none; } }
 
-.movie-main {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-}
+.movie-main { display: grid; grid-template-columns: 180px 1fr; }
 @media (max-width: 600px) { .movie-main { grid-template-columns: 110px 1fr; } }
 
 .movie-poster-wrap { background: var(--surface-3); }
 .movie-poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
 .no-poster {
   width: 100%; aspect-ratio: 2/3;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 8px; background: var(--surface-3);
-  color: var(--text-3); font-size: 0.75rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; background: var(--surface-3); color: var(--text-3); font-size: 0.75rem;
 }
 .no-poster svg { opacity: 0.25; }
 
-.movie-info {
-  padding: 24px 26px;
-  display: flex;
-  flex-direction: column;
-}
+.movie-info { padding: 24px 26px; display: flex; flex-direction: column; }
 @media (max-width: 600px) { .movie-info { padding: 14px; } }
 
-.meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 10px;
-}
+.meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 10px; }
 .badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.73rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-variant-numeric: tabular-nums;
+  display: inline-flex; align-items: center;
+  font-size: 0.73rem; font-weight: 600; letter-spacing: 0.03em;
+  padding: 3px 8px; border-radius: 5px; font-variant-numeric: tabular-nums;
 }
 .badge-year    { background: var(--surface-3); color: var(--text-2); }
 .badge-score   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(245,200,66,0.2); }
@@ -317,122 +193,44 @@ header {
 .badge-runtime { background: var(--surface-3); color: var(--text-2); }
 
 .movie-title {
-  font-size: clamp(1.2rem, 2.8vw, 1.7rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  text-wrap: balance;
-  margin-bottom: 8px;
+  font-size: clamp(1.2rem, 2.8vw, 1.7rem); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.15; text-wrap: balance; margin-bottom: 8px;
 }
-.movie-tagline {
-  font-size: 0.86rem;
-  color: var(--accent);
-  font-style: italic;
-  margin-bottom: 10px;
-  opacity: 0.82;
-}
+.movie-tagline { font-size: 0.86rem; color: var(--accent); font-style: italic; margin-bottom: 10px; opacity: 0.82; }
 .movie-overview {
-  font-size: 0.88rem;
-  color: var(--text-2);
-  line-height: 1.65;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  overflow: hidden;
+  font-size: 0.88rem; color: var(--text-2); line-height: 1.65; flex: 1;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden;
 }
-.movie-genres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 14px;
-}
-.genre-chip {
-  font-size: 0.73rem;
-  color: var(--text-2);
-  border: 1px solid var(--border-2);
-  border-radius: 20px;
-  padding: 3px 10px;
-}
-.movie-crew {
-  margin-top: 12px;
-  font-size: 0.78rem;
-  color: var(--text-3);
-  line-height: 1.7;
-}
+.movie-genres { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.genre-chip { font-size: 0.73rem; color: var(--text-2); border: 1px solid var(--border-2); border-radius: 20px; padding: 3px 10px; }
+.movie-crew { margin-top: 12px; font-size: 0.78rem; color: var(--text-3); line-height: 1.7; }
 .movie-crew span { color: var(--text-2); }
 
-/* ─── Streaming Section ─── */
-.streaming-section {
-  border-top: 1px solid var(--border);
-  padding: 22px 26px;
-}
+/* Streaming */
+.streaming-section { border-top: 1px solid var(--border); padding: 22px 26px; }
 @media (max-width: 600px) { .streaming-section { padding: 14px 16px; } }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.section-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.jw-tag {
-  font-size: 0.68rem;
-  color: var(--text-3);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.jw-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  flex-shrink: 0;
-}
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+.jw-tag { font-size: 0.68rem; color: var(--text-3); display: flex; align-items: center; gap: 5px; }
+.jw-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 .jw-dot.loading { background: var(--accent); animation: pulse 1.2s ease infinite; }
 .jw-dot.err     { background: var(--red); animation: none; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 
 .streaming-groups { display: flex; flex-direction: column; gap: 18px; }
-.group-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 9px;
-}
+.group-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-3); margin-bottom: 9px; }
 .provider-list { display: flex; flex-wrap: wrap; gap: 9px; }
 
-/* Provider chips — clickable links */
 .provider-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  border-radius: 9px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 1px solid transparent;
-  transition: filter 0.15s, transform 0.1s;
-  cursor: pointer;
-  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 13px; border-radius: 9px;
+  font-size: 0.82rem; font-weight: 600; border: 1px solid transparent;
+  transition: filter 0.15s, transform 0.1s; text-decoration: none;
 }
 .provider-chip:hover { filter: brightness(1.12); transform: translateY(-1px); }
-.chip-price {
-  font-size: 0.72rem;
-  font-weight: 500;
-  opacity: 0.75;
-  font-variant-numeric: tabular-nums;
-}
+.chip-price { font-size: 0.72rem; font-weight: 500; opacity: 0.75; font-variant-numeric: tabular-nums; }
 
-/* Brand colours by service name */
 .p-netflix   { background: rgba(229,9,20,0.12);   color: #ff4d58; border-color: rgba(229,9,20,0.25); }
 .p-max       { background: rgba(0,52,255,0.12);   color: #5b8aff; border-color: rgba(0,52,255,0.25); }
 .p-disney    { background: rgba(17,60,207,0.12);  color: #6b8fff; border-color: rgba(17,60,207,0.25); }
@@ -443,187 +241,35 @@ header {
 .p-paramount { background: rgba(58,184,255,0.10); color: #3AB8FF; border-color: rgba(58,184,255,0.2); }
 .p-mubi      { background: rgba(255,255,255,0.04);color: #9090a0; border-color: rgba(255,255,255,0.1); }
 .p-shudder   { background: rgba(180,0,0,0.12);    color: #e06060; border-color: rgba(180,0,0,0.2); }
-.p-criterion { background: rgba(200,180,120,0.10);color: #c8b878; border-color: rgba(200,180,120,0.2); }
 .p-default   { background: var(--surface-2); color: var(--text-2); border-color: var(--border-2); }
 
-.no-streaming {
-  color: var(--text-3);
-  font-size: 0.88rem;
-  padding: 6px 0;
-}
+.no-streaming { color: var(--text-3); font-size: 0.88rem; padding: 6px 0; }
 
-/* ─── Streaming skeleton ─── */
-.stream-skeleton {
-  display: flex;
-  gap: 9px;
-  flex-wrap: wrap;
-}
-.skel-chip {
-  height: 36px;
-  border-radius: 9px;
-  background: var(--surface-2);
-  animation: shimmer 1.4s ease infinite;
-}
-@keyframes shimmer {
-  0%,100% { opacity: 0.5; }
-  50%      { opacity: 1; }
-}
+.stream-skeleton { display: flex; gap: 9px; flex-wrap: wrap; }
+.skel-chip { height: 36px; border-radius: 9px; background: var(--surface-2); animation: shimmer 1.4s ease infinite; }
+@keyframes shimmer { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
 
-/* ─── Collection ─── */
-.collection-section {
-  border-top: 1px solid var(--border);
-  padding: 22px 26px;
-}
+/* Collection */
+.collection-section { border-top: 1px solid var(--border); padding: 22px 26px; }
 @media (max-width: 600px) { .collection-section { padding: 14px 16px; } }
-.collection-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 14px;
-}
+.collection-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
 .collection-scroll {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--surface-3) transparent;
+  display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px;
+  scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent;
 }
 .collection-scroll::-webkit-scrollbar { height: 4px; }
 .collection-scroll::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 2px; }
-
-.coll-item {
-  flex-shrink: 0;
-  width: 96px;
-  cursor: pointer;
-  transition: transform 0.15s;
-}
+.coll-item { flex-shrink: 0; width: 96px; cursor: pointer; transition: transform 0.15s; }
 .coll-item:hover { transform: translateY(-3px); }
 .coll-item.active .coll-poster-wrap { outline: 2px solid var(--accent); outline-offset: 2px; }
-.coll-poster-wrap {
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--surface-3);
-  aspect-ratio: 2/3;
-  margin-bottom: 7px;
-}
+.coll-poster-wrap { border-radius: 8px; overflow: hidden; background: var(--surface-3); aspect-ratio: 2/3; margin-bottom: 7px; }
 .coll-poster { width: 100%; height: 100%; object-fit: cover; display: block; }
-.coll-no-poster {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-3); font-size: 0.65rem;
-}
-.coll-title {
-  font-size: 0.73rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--text);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
+.coll-no-poster { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 0.65rem; }
+.coll-title { font-size: 0.73rem; font-weight: 600; line-height: 1.3; color: var(--text); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .coll-year { font-size: 0.68rem; color: var(--text-3); font-variant-numeric: tabular-nums; margin-top: 2px; }
 
-/* ─── Modal ─── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  max-width: 480px;
-  width: 100%;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
-}
-.modal h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
-.modal p  { color: var(--text-2); font-size: 0.88rem; line-height: 1.65; margin-bottom: 6px; }
-.modal ol { color: var(--text-2); font-size: 0.88rem; line-height: 1.9; padding-left: 18px; margin: 10px 0 6px; }
-.modal a  { color: var(--accent); text-decoration: underline; }
-.modal-input {
-  width: 100%;
-  background: var(--surface-2);
-  border: 1px solid var(--border-2);
-  border-radius: 8px;
-  color: var(--text);
-  font-size: 0.9rem;
-  padding: 11px 14px;
-  font-family: monospace;
-  margin: 14px 0 18px;
-  outline: none;
-}
-.modal-input:focus { border-color: var(--accent); }
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-.btn-primary {
-  background: var(--accent);
-  color: #0C0C0E;
-  border-radius: 8px;
-  padding: 9px 22px;
-  font-weight: 700;
-  font-size: 0.88rem;
-  transition: opacity 0.15s;
-}
-.btn-primary:hover { opacity: 0.85; }
-.btn-ghost {
-  background: var(--surface-2);
-  border: 1px solid var(--border-2);
-  color: var(--text-2);
-  border-radius: 8px;
-  padding: 9px 18px;
-  font-size: 0.88rem;
-}
-.btn-ghost:hover { background: var(--surface-3); }
-
-/* ─── Setup Banner ─── */
-.setup-banner {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: var(--radius-lg);
-  padding: 36px;
-  text-align: center;
-  max-width: 520px;
-  margin: 0 auto;
-}
-.setup-banner h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
-.setup-banner p  { color: var(--text-2); font-size: 0.9rem; line-height: 1.65; margin-bottom: 16px; }
-.setup-banner ol { text-align: left; color: var(--text-2); font-size: 0.88rem; line-height: 1.85; padding-left: 20px; margin-bottom: 22px; }
-.setup-banner a  { color: var(--accent); }
-.setup-key-input {
-  width: 100%;
-  background: var(--surface-2);
-  border: 1px solid var(--border-2);
-  border-radius: 8px;
-  color: var(--text);
-  font-size: 0.9rem;
-  padding: 11px 14px;
-  font-family: monospace;
-  margin-bottom: 12px;
-  outline: none;
-}
-.setup-key-input:focus { border-color: var(--accent); }
-
-/* ─── Footer ─── */
-.footer {
-  text-align: center;
-  padding: 12px 0 48px;
-  color: var(--text-3);
-  font-size: 0.76rem;
-}
+/* Footer */
+.footer { text-align: center; padding: 12px 0 48px; color: var(--text-3); font-size: 0.76rem; }
 .footer a { color: var(--text-3); text-decoration: underline; }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -634,16 +280,13 @@ header {
 
   <header>
     <div class="logo">Stream<em>Check</em></div>
-    <div class="header-actions">
-      <button class="hdr-btn" onclick="openKeyModal()">API Key</button>
-      <button class="hdr-btn" id="theme-btn" onclick="toggleTheme()">Light</button>
-    </div>
+    <button class="hdr-btn" id="theme-btn" onclick="toggleTheme()">Light</button>
   </header>
 
   <div class="hero">
-    <div class="hero-eyebrow">TMDB metadata · JustWatch streaming via residential proxy</div>
+    <div class="hero-eyebrow">TMDB · JustWatch · Residential proxy</div>
     <h1>Find where to watch<br>any movie — for real</h1>
-    <p class="hero-sub">Streaming availability checked live through a residential IP.<br>Age ratings, runtime, and every film in the series.</p>
+    <p class="hero-sub">Streaming availability checked live. Age ratings, runtime,<br>and every film in the series.</p>
 
     <div class="search-bar">
       <input type="text" id="search-input" placeholder="Search for a movie…"
@@ -654,7 +297,7 @@ header {
       <div class="suggestions" id="suggestions" role="listbox"></div>
     </div>
     <div class="region-row">
-      <label for="region-select">Streaming region:</label>
+      <label for="region-select">Region:</label>
       <select id="region-select" onchange="onRegionChange()">
         <option value="US">🇺🇸 United States</option>
         <option value="GB">🇬🇧 United Kingdom</option>
@@ -678,46 +321,23 @@ header {
 
   <div class="footer">
     Movie data by <a href="https://www.themoviedb.org" target="_blank" rel="noopener">TMDB</a> ·
-    Streaming data by <a href="https://www.justwatch.com" target="_blank" rel="noopener">JustWatch</a> ·
-    Not endorsed by either.
-  </div>
-</div>
-
-<!-- API Key Modal -->
-<div class="modal-overlay" id="key-modal">
-  <div class="modal">
-    <h2>TMDB API Key</h2>
-    <p>StreamCheck uses the free TMDB API for movie metadata. Streaming data comes from JustWatch via the backend.</p>
-    <ol>
-      <li>Create a free account at <a href="https://www.themoviedb.org/signup" target="_blank">themoviedb.org</a></li>
-      <li>Go to <strong>Settings → API</strong> and request a Developer key</li>
-      <li>Copy the <strong>API Read Access Token</strong> (long JWT starting with <code>eyJ…</code>)</li>
-    </ol>
-    <input class="modal-input" id="modal-key-input" type="password" placeholder="eyJhbGci…" autocomplete="off">
-    <div class="modal-actions">
-      <button class="btn-ghost" onclick="closeKeyModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveKey()">Save Key</button>
-    </div>
+    Streaming by <a href="https://www.justwatch.com" target="_blank" rel="noopener">JustWatch</a>
   </div>
 </div>
 
 <script>
-const TMDB_BASE  = 'https://api.themoviedb.org/3';
-const IMG_BASE   = 'https://image.tmdb.org/t/p';
-const BACKEND    = '';
+const IMG_BASE = 'https://image.tmdb.org/t/p';
 
-let apiKey        = localStorage.getItem('tmdb_key') || '';
-let currentRegion = localStorage.getItem('tmdb_region') || 'US';
+let currentRegion  = localStorage.getItem('sc_region') || 'US';
 let currentMovieId = null;
 let debounceTimer  = null;
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+// ─── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('region-select').value = currentRegion;
-  const saved = localStorage.getItem('theme');
+  const saved = localStorage.getItem('sc_theme');
   if (saved) document.documentElement.setAttribute('data-theme', saved);
   updateThemeBtn();
-  if (!apiKey) showSetupBanner();
 
   const inp = document.getElementById('search-input');
   inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleSearch(); });
@@ -725,18 +345,18 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(debounceTimer);
     const q = inp.value.trim();
     if (q.length < 2) { closeSugg(); return; }
-    debounceTimer = setTimeout(() => fetchSugg(q), 280);
+    debounceTimer = setTimeout(() => fetchSugg(q), 300);
   });
   document.addEventListener('click', e => {
     if (!e.target.closest('.suggestions-wrap') && !e.target.closest('.search-bar')) closeSugg();
   });
 });
 
-// ─── Theme ────────────────────────────────────────────────────────────────────
+// ─── Theme ─────────────────────────────────────────────────────────────────────
 function toggleTheme() {
-  const next = (document.documentElement.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  localStorage.setItem('sc_theme', next);
   updateThemeBtn();
 }
 function updateThemeBtn() {
@@ -745,88 +365,37 @@ function updateThemeBtn() {
   document.getElementById('theme-btn').textContent = isDark ? 'Light' : 'Dark';
 }
 
-// ─── API Key ──────────────────────────────────────────────────────────────────
-function openKeyModal()  {
-  document.getElementById('modal-key-input').value = apiKey;
-  document.getElementById('key-modal').classList.add('open');
-}
-function closeKeyModal() { document.getElementById('key-modal').classList.remove('open'); }
-function saveKey() {
-  const v = document.getElementById('modal-key-input').value.trim();
-  if (!v) { alert('Please enter your API key.'); return; }
-  apiKey = v;
-  localStorage.setItem('tmdb_key', v);
-  closeKeyModal();
-  if (document.getElementById('results').querySelector('.setup-banner')) {
-    document.getElementById('results').innerHTML = '';
-  }
-}
-document.getElementById('key-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeKeyModal();
-});
-
-// ─── Region ───────────────────────────────────────────────────────────────────
+// ─── Region ────────────────────────────────────────────────────────────────────
 function onRegionChange() {
   currentRegion = document.getElementById('region-select').value;
-  localStorage.setItem('tmdb_region', currentRegion);
+  localStorage.setItem('sc_region', currentRegion);
   if (currentMovieId) loadMovie(currentMovieId);
 }
 
-// ─── Setup Banner ─────────────────────────────────────────────────────────────
-function showSetupBanner() {
-  document.getElementById('results').innerHTML = `
-    <div class="setup-banner">
-      <h2>Set up your TMDB API key</h2>
-      <p>StreamCheck needs a free TMDB API key for movie search and metadata. Streaming data comes from JustWatch via the backend — no extra key needed.</p>
-      <ol>
-        <li>Sign up free at <a href="https://www.themoviedb.org/signup" target="_blank">themoviedb.org</a></li>
-        <li>Go to <strong>Settings → API</strong> and request a Developer key</li>
-        <li>Copy the <strong>API Read Access Token</strong> (the long JWT starting with <code>eyJ…</code>)</li>
-      </ol>
-      <input class="setup-key-input" id="setup-key" type="password" placeholder="Paste your API Read Access Token…">
-      <button class="btn-primary" style="width:100%" onclick="saveSetupKey()">Save &amp; Start Searching</button>
-    </div>`;
-}
-function saveSetupKey() {
-  const v = document.getElementById('setup-key').value.trim();
-  if (!v) { alert('Please paste your key first.'); return; }
-  apiKey = v;
-  localStorage.setItem('tmdb_key', v);
-  document.getElementById('results').innerHTML = '';
+// ─── API call ──────────────────────────────────────────────────────────────────
+async function api(path) {
+  const res = await fetch(path);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
 }
 
-// ─── TMDB fetch ───────────────────────────────────────────────────────────────
-async function tmdb(path, params = {}) {
-  if (!apiKey) { openKeyModal(); throw new Error('No API key'); }
-  const url = new URL(TMDB_BASE + path);
-  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${apiKey}` }
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.status_message || `HTTP ${res.status}`);
-  }
-  return res.json();
-}
-
-// ─── Suggestions ──────────────────────────────────────────────────────────────
+// ─── Suggestions ───────────────────────────────────────────────────────────────
 async function fetchSugg(q) {
-  if (!apiKey) return;
   try {
-    const d = await tmdb('/search/movie', { query: q, page: 1 });
-    renderSugg(d.results.slice(0, 6));
+    const d = await api(`/api/search?q=${encodeURIComponent(q)}&type=suggest`);
+    renderSugg(d.results || []);
   } catch(e) { closeSugg(); }
 }
 function renderSugg(movies) {
   const el = document.getElementById('suggestions');
   if (!movies.length) { closeSugg(); return; }
   el.innerHTML = movies.map(m => {
-    const yr = m.release_date ? m.release_date.slice(0,4) : '—';
+    const yr  = m.release_date ? m.release_date.slice(0,4) : '—';
     const img = m.poster_path
       ? `<img class="sugg-poster" src="${IMG_BASE}/w92${m.poster_path}" alt="" loading="lazy">`
-      : `<div class="sugg-placeholder">?</div>`;
-    return `<div class="suggestion-item" onclick="selectMovie(${m.id},'${esc(m.title)}')">
+      : `<div class="sugg-ph">?</div>`;
+    return `<div class="suggestion-item" role="option" onclick="selectMovie(${m.id}, ${JSON.stringify(m.title)})">
       ${img}
       <div>
         <div class="sugg-title">${esc(m.title)}</div>
@@ -843,68 +412,66 @@ function selectMovie(id, title) {
   loadMovie(id);
 }
 
-// ─── Search ───────────────────────────────────────────────────────────────────
+// ─── Search ────────────────────────────────────────────────────────────────────
 async function handleSearch() {
   const q = document.getElementById('search-input').value.trim();
   if (!q) return;
-  if (!apiKey) { showSetupBanner(); return; }
   closeSugg();
-  showLoading();
+  setSearchLoading(true);
+  showLoading('Searching…');
   try {
-    const d = await tmdb('/search/movie', { query: q, page: 1 });
-    if (!d.results.length) { showError(`No movies found for "${esc(q)}".`); return; }
-    const exact = d.results.find(m => m.title.toLowerCase() === q.toLowerCase());
-    loadMovie((exact || d.results[0]).id);
-  } catch(e) { showError(e.message); }
+    const d = await api(`/api/search?q=${encodeURIComponent(q)}`);
+    const results = d.results || [];
+    if (!results.length) {
+      showError(`No movies found for "${esc(q)}". Try checking the spelling or using the original language title.`);
+      return;
+    }
+    // Best match: exact title first, then highest popularity
+    const ql = q.toLowerCase();
+    const exact = results.find(m => m.title.toLowerCase() === ql)
+      || results.find(m => m.title.toLowerCase().includes(ql))
+      || results[0];
+    loadMovie(exact.id);
+  } catch(e) {
+    showError(e.message.includes('TMDB_KEY') ? 'The site needs a TMDB API key configured — contact the site owner.' : e.message);
+  } finally {
+    setSearchLoading(false);
+  }
+}
+function setSearchLoading(on) {
+  document.getElementById('search-btn').disabled = on;
+  document.getElementById('search-btn').textContent = on ? '…' : 'Search';
 }
 
-// ─── Load Movie ───────────────────────────────────────────────────────────────
+// ─── Load movie ────────────────────────────────────────────────────────────────
 async function loadMovie(id) {
   currentMovieId = id;
-  showLoading();
+  showLoading('Loading movie…');
   try {
-    const [details, releases] = await Promise.all([
-      tmdb(`/movie/${id}`, { append_to_response: 'credits' }),
-      tmdb(`/movie/${id}/release_dates`),
-    ]);
-
-    let collection = null;
-    if (details.belongs_to_collection) {
-      collection = await tmdb(`/collection/${details.belongs_to_collection.id}`).catch(() => null);
-    }
-
-    renderMovie(details, releases, collection);
-    // Streaming loads asynchronously and fills in the card
-    fetchStreaming(details.title, details.release_date?.slice(0,4) || '');
+    const d = await api(`/api/movie?id=${id}`);
+    renderMovie(d.details, d.releases, d.collection);
+    fetchStreaming(d.details.title, d.details.release_date?.slice(0,4) || '');
   } catch(e) {
     showError(e.message);
   }
 }
 
-// ─── Fetch streaming from backend ─────────────────────────────────────────────
+// ─── Fetch streaming ───────────────────────────────────────────────────────────
 async function fetchStreaming(title, year) {
-  const el = document.getElementById('streaming-body');
+  const el      = document.getElementById('streaming-body');
+  const dotEl   = document.getElementById('jw-dot');
+  const tagEl   = document.getElementById('jw-tag-text');
   if (!el) return;
-
-  const regionName = document.getElementById('region-select').options[document.getElementById('region-select').selectedIndex].text;
-
+  const regionName = regionLabel();
   try {
-    const url = `${BACKEND}/api/streaming?title=${encodeURIComponent(title)}&year=${encodeURIComponent(year)}&region=${encodeURIComponent(currentRegion)}`;
-    const res  = await fetch(url);
-    if (!res.ok) throw new Error(`Backend error ${res.status}`);
-    const data = await res.json();
-    renderStreamingBody(el, data, regionName);
-    // Update the live dot
-    const dot = document.getElementById('jw-dot');
-    if (dot) { dot.className = 'jw-dot'; }
-    const tag = document.getElementById('jw-tag-text');
-    if (tag) tag.textContent = 'Live · JustWatch via proxy';
+    const d = await api(`/api/streaming?title=${encodeURIComponent(title)}&year=${encodeURIComponent(year)}&region=${encodeURIComponent(currentRegion)}`);
+    renderStreamingBody(el, d, regionName);
+    if (dotEl) dotEl.className = 'jw-dot';
+    if (tagEl) tagEl.textContent = 'Live · JustWatch via proxy';
   } catch(e) {
-    const dot = document.getElementById('jw-dot');
-    if (dot) { dot.className = 'jw-dot err'; }
-    const tag = document.getElementById('jw-tag-text');
-    if (tag) tag.textContent = 'Backend offline — run node server.js';
-    if (el) el.innerHTML = `<div class="no-streaming">Start the backend with <code>node server.js</code> to see streaming availability.</div>`;
+    if (dotEl) dotEl.className = 'jw-dot err';
+    if (tagEl) tagEl.textContent = 'Streaming check failed';
+    if (el) el.innerHTML = `<div class="no-streaming">Couldn't fetch streaming data. ${esc(e.message)}</div>`;
   }
 }
 
@@ -913,64 +480,53 @@ function renderStreamingBody(el, data, regionName) {
     el.innerHTML = `<div class="no-streaming">Not available to stream in ${esc(regionName)} right now.</div>`;
     return;
   }
-
-  const grouped = data.grouped || {};
-  const html = Object.entries(grouped).map(([type, providers]) => {
+  const html = Object.entries(data.grouped || {}).map(([type, providers]) => {
     const chips = providers.map(p => {
-      const cls  = providerClass(p.name);
+      const cls   = providerClass(p.name);
       const price = p.price ? `<span class="chip-price">${esc(p.price)}</span>` : '';
-      if (p.url) {
-        return `<a class="provider-chip ${cls}" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.name)}${price}</a>`;
-      }
-      return `<span class="provider-chip ${cls}">${esc(p.name)}${price}</span>`;
+      return p.url
+        ? `<a class="provider-chip ${cls}" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.name)}${price}</a>`
+        : `<span class="provider-chip ${cls}">${esc(p.name)}${price}</span>`;
     }).join('');
-    return `<div>
-      <div class="group-label">${esc(type)}</div>
-      <div class="provider-list">${chips}</div>
-    </div>`;
+    return `<div><div class="group-label">${esc(type)}</div><div class="provider-list">${chips}</div></div>`;
   }).join('');
-
   el.innerHTML = `<div class="streaming-groups">${html}</div>`;
 }
 
 function providerClass(name) {
   const n = name.toLowerCase();
-  if (n.includes('netflix'))                    return 'p-netflix';
-  if (n.includes('max') || n.includes('hbo'))   return 'p-max';
-  if (n.includes('disney'))                     return 'p-disney';
-  if (n.includes('hulu'))                       return 'p-hulu';
+  if (n.includes('netflix'))               return 'p-netflix';
+  if (n.includes('max') || n.includes('hbo')) return 'p-max';
+  if (n.includes('disney'))               return 'p-disney';
+  if (n.includes('hulu'))                 return 'p-hulu';
   if (n.includes('prime') || n.includes('amazon')) return 'p-prime';
-  if (n.includes('apple'))                      return 'p-apple';
-  if (n.includes('peacock'))                    return 'p-peacock';
-  if (n.includes('paramount'))                  return 'p-paramount';
-  if (n.includes('mubi'))                       return 'p-mubi';
-  if (n.includes('shudder'))                    return 'p-shudder';
-  if (n.includes('criterion'))                  return 'p-criterion';
+  if (n.includes('apple'))               return 'p-apple';
+  if (n.includes('peacock'))             return 'p-peacock';
+  if (n.includes('paramount'))           return 'p-paramount';
+  if (n.includes('mubi'))               return 'p-mubi';
+  if (n.includes('shudder'))            return 'p-shudder';
   return 'p-default';
 }
 
-// ─── Render Movie ─────────────────────────────────────────────────────────────
+// ─── Render movie card ─────────────────────────────────────────────────────────
 function renderMovie(movie, releases, collection) {
-  const region = currentRegion;
   const year   = movie.release_date ? movie.release_date.slice(0,4) : '';
+  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
+  const runtime = movie.runtime ? `${Math.floor(movie.runtime/60)}h ${movie.runtime%60}m` : null;
+  const directors = (movie.credits?.crew||[]).filter(p=>p.job==='Director').map(p=>p.name);
+  const cast      = (movie.credits?.cast||[]).slice(0,4).map(p=>p.name);
+  const genreChips = (movie.genres||[]).map(g=>`<span class="genre-chip">${esc(g.name)}</span>`).join('');
 
-  // Age cert — prefer selected region, fall back to US
-  const certEntry = releases.results.find(r => r.iso_3166_1 === region)
-    || releases.results.find(r => r.iso_3166_1 === 'US');
-  const cert = certEntry?.release_dates.find(d => d.certification)?.certification || '';
-
-  const runtime  = movie.runtime ? `${Math.floor(movie.runtime/60)}h ${movie.runtime%60}m` : null;
-  const rating   = movie.vote_average ? movie.vote_average.toFixed(1) : null;
-  const directors = (movie.credits?.crew || []).filter(p => p.job === 'Director').map(p => p.name);
-  const cast      = (movie.credits?.cast || []).slice(0, 4).map(p => p.name);
-  const genreChips = (movie.genres || []).map(g => `<span class="genre-chip">${esc(g.name)}</span>`).join('');
+  // Age cert: try selected region, fall back to US
+  const certEntry = (releases?.results||[]).find(r=>r.iso_3166_1===currentRegion)
+    || (releases?.results||[]).find(r=>r.iso_3166_1==='US');
+  const cert = certEntry?.release_dates?.find(d=>d.certification)?.certification || '';
 
   const poster = movie.poster_path
     ? `<img class="movie-poster" src="${IMG_BASE}/w342${movie.poster_path}" alt="${esc(movie.title)} poster" loading="lazy">`
     : `<div class="no-poster"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/></svg>No poster</div>`;
 
-  const regionName = document.getElementById('region-select').options[document.getElementById('region-select').selectedIndex].text;
-  const collHTML   = collection ? buildCollectionHTML(collection, movie.id) : '';
+  const collHTML = collection ? buildCollectionHTML(collection, movie.id) : '';
 
   document.getElementById('results').innerHTML = `
     <div class="movie-card">
@@ -985,7 +541,7 @@ function renderMovie(movie, releases, collection) {
           </div>
           <h2 class="movie-title">${esc(movie.title)}</h2>
           ${movie.tagline ? `<div class="movie-tagline">"${esc(movie.tagline)}"</div>` : ''}
-          <p class="movie-overview">${esc(movie.overview || 'No synopsis available.')}</p>
+          <p class="movie-overview">${esc(movie.overview||'No synopsis available.')}</p>
           ${genreChips ? `<div class="movie-genres">${genreChips}</div>` : ''}
           <div class="movie-crew">
             ${directors.length ? `Directed by <span>${esc(directors.join(', '))}</span><br>` : ''}
@@ -996,7 +552,7 @@ function renderMovie(movie, releases, collection) {
 
       <div class="streaming-section">
         <div class="section-header">
-          <div class="section-label">Where to watch · ${esc(regionName)}</div>
+          <div class="section-label">Where to watch · ${esc(regionLabel())}</div>
           <div class="jw-tag">
             <div class="jw-dot loading" id="jw-dot"></div>
             <span id="jw-tag-text">Checking via proxy…</span>
@@ -1016,49 +572,42 @@ function renderMovie(movie, releases, collection) {
     </div>`;
 }
 
-// ─── Collection ───────────────────────────────────────────────────────────────
+// ─── Collection ────────────────────────────────────────────────────────────────
 function buildCollectionHTML(collection, currentId) {
-  const sorted = [...collection.parts].sort((a,b) =>
+  const sorted = [...collection.parts].sort((a,b)=>
     (a.release_date||'9999').localeCompare(b.release_date||'9999')
   );
   if (sorted.length < 2) return '';
-
   const items = sorted.map(m => {
-    const yr = m.release_date ? m.release_date.slice(0,4) : '';
+    const yr  = m.release_date ? m.release_date.slice(0,4) : '';
     const img = m.poster_path
       ? `<img class="coll-poster" src="${IMG_BASE}/w185${m.poster_path}" alt="" loading="lazy">`
       : `<div class="coll-no-poster">?</div>`;
-    return `<div class="coll-item ${m.id === currentId ? 'active' : ''}" onclick="loadMovie(${m.id})" title="${esc(m.title)}">
+    return `<div class="coll-item ${m.id===currentId?'active':''}" onclick="loadMovie(${m.id})" title="${esc(m.title)}">
       <div class="coll-poster-wrap">${img}</div>
       <div class="coll-title">${esc(m.title)}</div>
       ${yr ? `<div class="coll-year">${yr}</div>` : ''}
     </div>`;
   }).join('');
-
   return `<div class="collection-section">
     <div class="collection-label">${esc(collection.name)} · ${sorted.length} films</div>
     <div class="collection-scroll">${items}</div>
   </div>`;
 }
 
-// ─── UI states ────────────────────────────────────────────────────────────────
-function showLoading() {
+// ─── UI helpers ────────────────────────────────────────────────────────────────
+function showLoading(msg) {
   document.getElementById('results').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Looking it up…</p>
-    </div>`;
+    <div class="loading-state"><div class="spinner"></div><p>${esc(msg||'Loading…')}</p></div>`;
 }
 function showError(msg) {
   document.getElementById('results').innerHTML = `
-    <div class="error-state">
-      <strong>Something went wrong</strong>
-      <p>${esc(msg)}</p>
-      ${/401|invalid/i.test(msg) ? '<p style="margin-top:8px">Your API key may be invalid — click <strong>API Key</strong> to update it.</p>' : ''}
-    </div>`;
+    <div class="error-state"><strong>Couldn't load</strong><p>${msg}</p></div>`;
 }
-
-// ─── Util ─────────────────────────────────────────────────────────────────────
+function regionLabel() {
+  const sel = document.getElementById('region-select');
+  return sel.options[sel.selectedIndex].text;
+}
 function esc(s) {
   return String(s)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
