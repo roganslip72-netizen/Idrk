@@ -7,7 +7,7 @@ const path = require('path');
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
-const PROXY_URL = `http://${process.env.PROXY_USER}:${process.env.PROXY_PASS}@${process.env.PROXY_HOST}:${process.env.PROXY_PORT}`;
+const PROXY_URL = `http://${process.env.PROXY_USER || 'PwWM1JFbPPP3oMOu'}:${process.env.PROXY_PASS || 'mnGUfFPFq21Tj7na'}@${process.env.PROXY_HOST || 'geo.iproyal.com'}:${process.env.PROXY_PORT || '22225'}`;
 const proxyAgent = new HttpsProxyAgent(PROXY_URL);
 
 // Serve the frontend
