@@ -66,7 +66,7 @@ const JW_IMG      = 'https://images.justwatch.com';
 
 function locale(region) {
   const l = LOCALE_MAP[region] || 'en_US';
-  return { country: l.split('_')[1], language: l.split('_')[0].toUpperCase() };
+  return { country: l.split('_')[1], language: l.split('_')[0].toLowerCase() };
 }
 
 module.exports = { gql, locale, MONO_LABELS, TYPE_ORDER, JW_IMG, LOCALE_MAP };
