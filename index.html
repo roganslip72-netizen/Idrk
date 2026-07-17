@@ -233,11 +233,28 @@ header{padding:28px 0 0;display:flex;align-items:center;justify-content:space-be
 <script>
 const JW_IMG = 'https://images.justwatch.com';
 
-let currentRegion  = localStorage.getItem('sc_region') || 'US';
+const SUPPORTED_REGIONS = ['US','GB','CA','AU','DE','FR','IN','JP','BR','MX','ES','IT','NL','SE'];
+let currentRegion  = localStorage.getItem('sc_region') || null;
 let currentMovieId = null;
 let debounceTimer  = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+async function detectRegion() {
+  if (currentRegion) return; // user already chose one
+  try {
+    const r = await fetch('https://ipapi.co/json/');
+    const d = await r.json();
+    const code = (d.country_code || '').toUpperCase();
+    if (SUPPORTED_REGIONS.includes(code)) {
+      currentRegion = code;
+      localStorage.setItem('sc_region', code);
+    }
+  } catch (_) {}
+  if (!currentRegion) currentRegion = 'US';
+  document.getElementById('region-select').value = currentRegion;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await detectRegion();
   document.getElementById('region-select').value = currentRegion;
   const saved = localStorage.getItem('sc_theme');
   if (saved) document.documentElement.setAttribute('data-theme', saved);
