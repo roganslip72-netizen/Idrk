@@ -1,15 +1,12 @@
-const { gql, locale, JW_IMG } = require('./_jw');
+const { gql, locale } = require('./_jw');
 
 const SEARCH_QUERY = `
-query Search($q: String!, $country: Country!, $lang: Language!, $first: Int!) {
-  popularTitles(
-    country: $country
-    filter: { searchQuery: $q, objectTypes: [MOVIE] }
-    first: $first
-  ) {
+query Search($country: Country!, $lang: Language!, $first: Int!, $filter: TitleFilter!) {
+  popularTitles(country: $country, first: $first, filter: $filter) {
     edges {
       node {
         id
+        __typename
         ... on Movie {
           content(country: $country, language: $lang) {
             title
@@ -24,7 +21,12 @@ query Search($q: String!, $country: Country!, $lang: Language!, $first: Int!) {
 }`;
 
 async function search(q, country, language, first = 8) {
-  const data = await gql(SEARCH_QUERY, { q, country, lang: language, first });
+  const data = await gql(SEARCH_QUERY, {
+    country,
+    lang: language,
+    first,
+    filter: { searchQuery: q, objectTypes: ['MOVIE'] },
+  });
   return (data?.popularTitles?.edges || []).map(e => ({
     id:       e.node.id,
     title:    e.node.content?.title || '',
@@ -35,29 +37,23 @@ async function search(q, country, language, first = 8) {
 }
 
 async function fuzzySearch(query, country, language) {
-  // 1. Try exact query
   let results = await search(query, country, language, 8);
   if (results.length) return results;
 
-  // 2. Strip punctuation / special chars
   const stripped = query.replace(/[^a-zA-Z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
   if (stripped !== query) {
     results = await search(stripped, country, language, 8);
     if (results.length) return results;
   }
 
-  // 3. Drop words under 3 chars (common typo words like "thw" "teh")
   const words = stripped.split(' ').filter(w => w.length >= 3);
   if (words.length > 0 && words.join(' ') !== stripped) {
     results = await search(words.join(' '), country, language, 8);
     if (results.length) return results;
   }
 
-  // 4. Try each significant word, merge by frequency (finds movies appearing in multiple word searches)
   if (words.length > 1) {
-    const sets = await Promise.all(
-      words.map(w => search(w, country, language, 6).catch(() => []))
-    );
+    const sets = await Promise.all(words.map(w => search(w, country, language, 6).catch(() => [])));
     const score = new Map();
     for (const set of sets) {
       for (const m of set) {
@@ -65,9 +61,7 @@ async function fuzzySearch(query, country, language) {
         score.set(m.id, { m, n: prev.n + 1 });
       }
     }
-    return [...score.values()]
-      .sort((a, b) => b.n - a.n)
-      .map(x => x.m);
+    return [...score.values()].sort((a, b) => b.n - a.n).map(x => x.m);
   }
 
   return [];
@@ -78,15 +72,13 @@ module.exports = async (req, res) => {
   const { q, region = 'US', type } = req.query;
   if (!q) return res.status(400).json({ error: 'q required' });
 
-  const { country, language } = require('./_jw').locale(region);
+  const { country, language } = locale(region);
 
   try {
-    // Suggestions — fast, no fuzzy
     if (type === 'suggest') {
       const results = await search(q, country, language, 6);
       return res.json({ results });
     }
-
     const results = await fuzzySearch(q, country, language);
     return res.json({ results });
   } catch (err) {

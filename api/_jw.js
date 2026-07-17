@@ -5,6 +5,7 @@ const HEADERS = {
   'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
   'Origin':          'https://www.justwatch.com',
   'Referer':         'https://www.justwatch.com/',
+  'Accept':          '*/*',
   'Accept-Language': 'en-US,en;q=0.9',
 };
 
@@ -15,7 +16,10 @@ async function gql(query, variables, timeout = 12000) {
     body:    JSON.stringify({ query, variables }),
     timeout,
   });
-  if (!res.ok) throw new Error(`JustWatch ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`JustWatch ${res.status}: ${body.slice(0, 300)}`);
+  }
   const json = await res.json();
   if (json.errors?.length) throw new Error(json.errors[0].message);
   return json.data;

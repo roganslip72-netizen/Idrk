@@ -8,19 +8,13 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
       objectId
       content(country: $country, language: $lang) {
         title
-        originalTitle
         originalReleaseYear
-        originalReleaseDate
-        runtime
-        shortDescription
-        ageCertification
-        genres { translation }
         posterUrl
-        backdrops { backdropUrl }
+        shortDescription
+        genres { translation }
         scoring {
           imdbScore
           imdbVotes
-          tomatoMeter
         }
         credits {
           role {
@@ -30,7 +24,7 @@ query MovieDetails($id: ID!, $country: Country!, $lang: Language!) {
           crType
         }
       }
-      offers(country: $country) {
+      offers(country: $country, platform: WEB) {
         monetizationType
         retailPrice(language: $lang)
         package { clearName shortName }
@@ -94,17 +88,17 @@ module.exports = async (req, res) => {
   const { country, language } = locale(region);
 
   try {
-    const data  = await gql(MOVIE_QUERY, { id, country, lang: language });
-    const node  = data?.node;
+    const data = await gql(MOVIE_QUERY, { id, country, lang: language });
+    const node = data?.node;
     if (!node) return res.status(404).json({ error: 'Movie not found' });
 
     const content = node.content || {};
 
     const directors = [], cast = [];
     for (const c of content.credits || []) {
-      if (c.crType === 'DIRECTOR' || c.role?.__typename === 'Director') {
+      if (c.crType === 'DIRECTOR') {
         if (c.role?.name) directors.push(c.role.name);
-      } else if (c.crType === 'ACTOR' || c.role?.__typename === 'Cast') {
+      } else if (c.crType === 'ACTOR') {
         if (c.role?.name) cast.push({ name: c.role.name, character: c.role.character || '' });
       }
     }
@@ -133,23 +127,17 @@ module.exports = async (req, res) => {
     } catch (_) {}
 
     return res.json({
-      id:           node.id,
-      title:        content.title,
-      originalTitle: content.originalTitle || null,
-      year:         content.originalReleaseYear,
-      releaseDate:  content.originalReleaseDate || null,
-      runtime:      content.runtime || null,
-      overview:     content.shortDescription || '',
-      cert:         content.ageCertification || null,
-      genres:       (content.genres || []).map(g => g.translation),
-      poster:       content.posterUrl || null,
-      backdrop:     content.backdrops?.[0]?.backdropUrl || null,
-      imdbScore:    content.scoring?.imdbScore || null,
-      imdbVotes:    content.scoring?.imdbVotes || null,
-      tomatoMeter:  content.scoring?.tomatoMeter || null,
+      id:        node.id,
+      title:     content.title,
+      year:      content.originalReleaseYear,
+      overview:  content.shortDescription || '',
+      genres:    (content.genres || []).map(g => g.translation),
+      poster:    content.posterUrl || null,
+      imdbScore: content.scoring?.imdbScore || null,
+      imdbVotes: content.scoring?.imdbVotes || null,
       directors,
-      cast:         cast.slice(0, 5),
-      streaming:    { found: providers.length > 0, providers, grouped },
+      cast:      cast.slice(0, 5),
+      streaming: { found: providers.length > 0, providers, grouped },
       series,
     });
   } catch (err) {
