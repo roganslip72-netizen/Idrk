@@ -635,6 +635,119 @@ header {
   font-size: 0.65rem;
 }
 
+/* ─── Verify Panel ─── */
+.verify-panel {
+  border-top: 1px solid var(--border);
+  padding: 20px 26px;
+}
+@media (max-width: 600px) { .verify-panel { padding: 16px; } }
+.verify-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.verify-label-group { flex: 1; min-width: 0; }
+.verify-label-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+.verify-label-sub {
+  font-size: 0.8rem;
+  color: var(--text-3);
+}
+.verify-label-sub strong { color: var(--text-2); font-weight: 600; }
+.btn-verify {
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.btn-verify:hover { background: var(--surface-3); border-color: var(--accent); color: var(--accent); }
+.btn-verify:disabled { opacity: 0.45; pointer-events: none; }
+.btn-verify svg { transition: transform 0.4s; }
+.btn-verify.spinning svg { animation: spin 0.7s linear infinite; }
+.verify-results {
+  margin-top: 16px;
+  display: none;
+}
+.verify-results.open { display: block; }
+.verify-source-tag {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.verify-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+.verify-dot.warn { background: #F5A623; }
+.verify-dot.err  { background: var(--red); }
+.verify-groups { display: flex; flex-direction: column; gap: 14px; }
+.verify-group-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.verify-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.verify-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  color: var(--text);
+}
+.verify-chip a { color: inherit; }
+.verify-chip a:hover { color: var(--accent); }
+.verify-chip .price {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+.verify-diff {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.verify-diff.match   { background: rgba(61,214,140,0.08);  border: 1px solid rgba(61,214,140,0.2); color: var(--green); }
+.verify-diff.mismatch { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); color: #F5A623; }
+.verify-not-found {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  padding: 10px 0;
+}
+
 /* ─── TMDB Attribution ─── */
 .tmdb-attr {
   text-align: center;
@@ -1009,13 +1122,15 @@ function renderMovie(movie, providers, releases, collection) {
 
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : null;
 
+  const year = movie.release_date ? movie.release_date.slice(0,4) : '';
+
   document.getElementById('results').innerHTML = `
     <div class="movie-card" id="movie-card-${movie.id}">
       <div class="movie-main">
         <div class="movie-poster-wrap">${poster}</div>
         <div class="movie-info">
           <div class="movie-meta-row">
-            ${movie.release_date ? `<span class="badge badge-year">${movie.release_date.slice(0,4)}</span>` : ''}
+            ${year ? `<span class="badge badge-year">${year}</span>` : ''}
             ${rating ? `<span class="badge badge-rating">★ ${rating}</span>` : ''}
             ${cert ? `<span class="badge badge-cert">${escHtml(cert)}</span>` : ''}
             ${runtime ? `<span class="badge badge-runtime">${runtime}</span>` : ''}
@@ -1029,6 +1144,7 @@ function renderMovie(movie, providers, releases, collection) {
         </div>
       </div>
       ${streamingHTML}
+      ${buildVerifyPanel(movie.title, year, flatrate, rent, buy, ads)}
       ${collHTML}
     </div>
   `;
@@ -1090,6 +1206,112 @@ function getProviderClass(name) {
   if (n.includes('paramount'))  return 'provider-Paramount';
   if (n.includes('mubi'))       return 'provider-Mubi';
   return 'provider-default';
+}
+
+// ─── Verify Panel ─────────────────────────────────────────
+function buildVerifyPanel(title, year, flatrate, rent, buy, ads) {
+  const tmdbCount = flatrate.length + rent.length + buy.length + ads.length;
+  const summary = tmdbCount
+    ? `TMDB shows <strong>${tmdbCount}</strong> offer${tmdbCount !== 1 ? 's' : ''} for this region`
+    : `TMDB shows <strong>no streaming</strong> for this region`;
+
+  return `<div class="verify-panel">
+    <div class="verify-row">
+      <div class="verify-label-group">
+        <div class="verify-label-title">Second-opinion check</div>
+        <div class="verify-label-sub">${summary} — cross-check via JustWatch through residential proxy</div>
+      </div>
+      <button class="btn-verify" id="verify-btn" onclick="runVerify('${escHtml(title)}','${escHtml(year)}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+          <path d="M21 3v5h-5"/>
+        </svg>
+        Verify via Proxy
+      </button>
+    </div>
+    <div class="verify-results" id="verify-results"></div>
+  </div>`;
+}
+
+async function runVerify(title, year) {
+  const btn = document.getElementById('verify-btn');
+  const panel = document.getElementById('verify-results');
+  btn.disabled = true;
+  btn.classList.add('spinning');
+  panel.classList.add('open');
+  panel.innerHTML = `<div class="verify-source-tag"><div class="verify-dot" style="background:var(--accent);animation:spin 0.8s linear infinite"></div>Querying JustWatch via residential proxy…</div>`;
+
+  const region = document.getElementById('region-select').value;
+
+  try {
+    const url = `http://localhost:3001/api/verify?title=${encodeURIComponent(title)}&year=${encodeURIComponent(year)}&region=${encodeURIComponent(region)}`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    renderVerifyResults(panel, data, title);
+  } catch(e) {
+    panel.innerHTML = `<div class="verify-source-tag"><div class="verify-dot err"></div>Could not reach the backend — is <code>node server.js</code> running on port 3001?</div>
+    <div class="verify-not-found" style="color:var(--red);font-size:0.82rem">${escHtml(e.message)}</div>`;
+  }
+
+  btn.disabled = false;
+  btn.classList.remove('spinning');
+}
+
+function renderVerifyResults(panel, data, searchTitle) {
+  if (data.error) {
+    panel.innerHTML = `<div class="verify-source-tag"><div class="verify-dot err"></div>Proxy error</div>
+      <div class="verify-not-found" style="color:var(--red)">${escHtml(data.error)}</div>`;
+    return;
+  }
+  if (!data.found) {
+    panel.innerHTML = `<div class="verify-source-tag"><div class="verify-dot warn"></div>JustWatch via residential proxy · not found</div>
+      <div class="verify-not-found">"${escHtml(searchTitle)}" was not found in JustWatch's database for this region. The title may be unavailable or listed differently.</div>`;
+    return;
+  }
+
+  const { grouped, providers, title, year, source } = data;
+  const types = Object.keys(grouped || {});
+
+  let groupsHTML = '';
+  for (const type of types) {
+    const chips = grouped[type].map(p => {
+      const priceStr = p.price ? `<span class="price">${escHtml(p.price)}</span>` : '';
+      const link = p.url ? `<a href="${escHtml(p.url)}" target="_blank" rel="noopener">${escHtml(p.name)}</a>` : escHtml(p.name);
+      return `<div class="verify-chip">${link}${priceStr}</div>`;
+    }).join('');
+    groupsHTML += `<div>
+      <div class="verify-group-label">${escHtml(type)}</div>
+      <div class="verify-chips">${chips}</div>
+    </div>`;
+  }
+
+  if (!groupsHTML) {
+    groupsHTML = `<div class="verify-not-found">JustWatch confirms: not available to stream in this region right now.</div>`;
+  }
+
+  // Diff summary
+  const tmdbPanel = document.querySelector('.streaming-section');
+  const tmdbChips = tmdbPanel ? tmdbPanel.querySelectorAll('.provider-chip').length : 0;
+  const jwCount   = providers.length;
+  let diffHTML = '';
+  if (tmdbChips > 0 && jwCount === 0) {
+    diffHTML = `<div class="verify-diff mismatch">⚠ TMDB shows ${tmdbChips} offer(s) but JustWatch finds none — TMDB data may be outdated for this region.</div>`;
+  } else if (tmdbChips === 0 && jwCount > 0) {
+    diffHTML = `<div class="verify-diff mismatch">⚠ TMDB shows no offers but JustWatch finds ${jwCount} — your TMDB region setting may need adjusting.</div>`;
+  } else if (jwCount > 0) {
+    diffHTML = `<div class="verify-diff match">✓ Both sources agree this is available — ${jwCount} offer(s) confirmed via proxy.</div>`;
+  } else {
+    diffHTML = `<div class="verify-diff match">✓ Both sources agree: not currently available to stream in this region.</div>`;
+  }
+
+  panel.innerHTML = `
+    <div class="verify-source-tag">
+      <div class="verify-dot"></div>
+      Live data · ${escHtml(source || 'JustWatch')} · <em>${escHtml(title)}${year ? ' (' + escHtml(String(year)) + ')' : ''}</em>
+    </div>
+    <div class="verify-groups">${groupsHTML}</div>
+    ${diffHTML}
+  `;
 }
 
 function buildCollectionHTML(collection, currentId) {
